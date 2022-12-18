@@ -1,4 +1,4 @@
-import createElement from "../../../createElement";
+import createElement from "../../../../createElement";
 
 const createProduct = (title, price) => {
     const product = createElement('div', 'product');

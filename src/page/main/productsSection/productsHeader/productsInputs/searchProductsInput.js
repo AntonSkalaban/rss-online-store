@@ -1,5 +1,5 @@
 import createElement from "../../../../../createElement";
-import createProduct from "../../../product/createProduct";
+import createProduct from "../../product/createProduct";
 import loadData from "../../../loadData";
 
 const searchProductsInput =  () => {
