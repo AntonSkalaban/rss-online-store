@@ -1,15 +1,15 @@
 import createElement from "../../createElement";
-import searchProductInput from "./mainInputs/searchProductInput";
-import productsSection from "./productsBoard/productsBoard"
+import createProductsSection from "./productsSection/createProductsSection";
+import createFilterSection from "../../page/main/filterSection/createFilterSection"
 
 const createMain = () => {
     const main = createElement('main', 'main');
-    const board = productsSection();
-    const searchInpit = searchProductInput();
-
-    main.appendChild(searchInpit);
-    main.appendChild(board);
+    const productsSection = createProductsSection();
+    const filterSection = createFilterSection();
     
+    main.appendChild(filterSection);
+    main.appendChild(productsSection);
+
     return main;
 }
 
