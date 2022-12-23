@@ -4,7 +4,7 @@ import { renderSearchProducts } from "../../../../../index";
 const createSearchInput = () => {
   const searchInput = createElement('input', 'search-input');
 
-  const searchProducts = (e: Event) => renderSearchProducts(e);
+  const searchProducts = (e: Event) => renderSearchProducts();
 
   searchInput.addEventListener('keyup', searchProducts);
   return searchInput;

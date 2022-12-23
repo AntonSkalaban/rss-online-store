@@ -31,7 +31,7 @@ const createSortInput =  () => {
   sortInput.add(sotrByRatingASC);
   sortInput.add(sotrByRatingDESC); 
 
-  const sortProducts = (e: Event) => renderSortProducts(e);
+  const sortProducts = (e: Event) => renderSortProducts();
 
   sortInput.addEventListener('change', sortProducts);
 

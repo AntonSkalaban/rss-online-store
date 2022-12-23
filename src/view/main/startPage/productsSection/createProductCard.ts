@@ -2,12 +2,15 @@ import createElement from "../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../helpers/createBlockWithTitle";
 
 const createProductCard = (
-  title: string, category: string, brand: string, price: string, discount: string, img: string
+  id: number, title: string, category: string, brand: string, price: string, discount: string, img: string
 ) => {
+  
   const [productCard, productMain] = createBlockWitdthTitle('product-card', 'product-title', title);
 
+  productCard.id = String(id);
+
   const productImgContianer = createElement('div', 'product-img-container');
-  const productImg =  <HTMLImageElement>createElement('img', 'product-img');
+  const productImg = <HTMLImageElement>createElement('img', 'product-img');
   productImg.src = img;
 
   const productAbout = createElement('div', 'product-about'); 
