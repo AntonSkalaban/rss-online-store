@@ -34,15 +34,30 @@ export const renderFilteredByPrice = () => {
   renderPage()
 }
 
+export const renderFilteredByStock = () => {
+  renderPage()
+}
+
+export const renderResetPage = () => {
+  renderProducts(data);
+}
+
 const renderPage = () => {
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
   const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
+
   const categoryCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.category__checkbox'));
   const brandCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.brand__checkbox'));
+
   const lowerPriceSlider = document.querySelector<HTMLInputElement>('.lower-price-slider');
   const upperPriceSlider = document.querySelector<HTMLInputElement>('.upper-price-slider');
   const lowerPrice = document.querySelector<HTMLInputElement>('.lower-price-value');
   const upperPrice = document.querySelector<HTMLInputElement>('.upper-price-value');
+
+  const lowerStockSlider = document.querySelector<HTMLInputElement>('.lower-stock-slider');
+  const upperStockSlider = document.querySelector<HTMLInputElement>('.upper-stock-slider');
+  const lowerStock = document.querySelector<HTMLInputElement>('.lower-stock-value');
+  const upperStock = document.querySelector<HTMLInputElement>('.upper-stock-value');
 
   let newData = [...data];
 
@@ -94,13 +109,23 @@ const renderPage = () => {
   }
 
   if(lowerPriceSlider && upperPriceSlider && lowerPrice && upperPrice) {
-    const maxPrice = Math.max(+lowerPriceSlider.value, +upperPriceSlider.value);
     const minPrice = Math.min(+lowerPriceSlider.value, +upperPriceSlider.value);
+    const maxPrice = Math.max(+lowerPriceSlider.value, +upperPriceSlider.value);
 
     lowerPrice.textContent = `${ minPrice }$`;
     upperPrice.textContent = `${ maxPrice }$`;
 
     newData = newData.filter((el) => el.price >= minPrice && el.price <= maxPrice);
+  }
+
+  if(lowerStockSlider && upperStockSlider && lowerStock && upperStock) {
+    const maxStock = Math.max(+lowerStockSlider.value, +upperStockSlider.value);
+    const minStock = Math.min(+lowerStockSlider.value, +upperStockSlider.value);
+
+    lowerStock.textContent = `${ minStock }`;
+    upperStock.textContent = `${ maxStock }`;
+
+    newData = newData.filter((el) => el.stock >= minStock && el.stock <= maxStock);
   }
 
   renderProducts(newData);
