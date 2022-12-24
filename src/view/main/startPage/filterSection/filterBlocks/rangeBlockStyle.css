@@ -3,7 +3,8 @@
   position: relative;
   background-color: red;
   border-radius: 2px;
-   width: 500px;
+   width: 495px;
+   margin-left: 5px;
 }
 .range-input {
   position: relative;

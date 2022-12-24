@@ -5,7 +5,7 @@ import { IProduct } from "../../../../../model/dataType";
 import "../filterBlocks/filterBlock.css"
 
 const createBrandBlock = (data: Array<IProduct>) => {
-  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'brand');
+  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Brand');
   const list = createElement('ul', 'category__list');
 
   data
