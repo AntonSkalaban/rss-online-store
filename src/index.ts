@@ -28,11 +28,19 @@ export const renderFilteredByCategory = () => {
   renderPage()
 }
 
+export const renderFilteredByPrice = () => {
+  renderPage()
+}
+
 const renderPage = () => {
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
   const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
   const categoryCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.category__checkbox'));
   const brandCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.brand__checkbox'));
+  const lowerPriceSlider = document.querySelector<HTMLInputElement>('.lower-price-slider');
+  const upperPriceSlider = document.querySelector<HTMLInputElement>('.upper-price-slider');
+  const lowerPrice = document.querySelector<HTMLInputElement>('.lower-price-value');
+  const upperPrice = document.querySelector<HTMLInputElement>('.upper-price-value');
 
   let newData = [...data];
 
@@ -81,6 +89,16 @@ const renderPage = () => {
   if (activeBrandCheckboxes.length) {
     const  activeCategoryes = activeBrandCheckboxes.map((el) => el.value.toUpperCase());
     newData = newData.filter((product) => activeCategoryes.includes(product.brand.toUpperCase()));
+  }
+
+  if(lowerPriceSlider && upperPriceSlider && lowerPrice && upperPrice) {
+    const maxPrice = Math.max(+lowerPriceSlider.value, +upperPriceSlider.value);
+    const minPrice = Math.min(+lowerPriceSlider.value, +upperPriceSlider.value);
+
+    lowerPrice.textContent = `${ minPrice }$`;
+    upperPrice.textContent = `${ maxPrice }$`;
+
+    newData = newData.filter((el) => el.price >= minPrice && el.price <= maxPrice);
   }
 
   renderProducts(newData);
