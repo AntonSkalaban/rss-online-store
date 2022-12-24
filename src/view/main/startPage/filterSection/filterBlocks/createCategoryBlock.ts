@@ -4,7 +4,7 @@ import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 
 const createCategoryBlock = (data: Array<IProduct>) => {
-  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filetr-title', 'category');
+  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filetr-title', 'Category');
   const list = createElement('ul', 'category__list');
 
   data
