@@ -55,8 +55,15 @@ module.exports = ({ development }) => ({
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: 'src/assets/styles/vars.scss'
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

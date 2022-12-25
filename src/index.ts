@@ -1,8 +1,10 @@
 import { IProduct } from './model/dataType';
-import './styles.scss';
 import data from './model/data';
 import renderProducts from './model/productsLoader';
-import createApp from "./view/app"
+import createApp from "./view/app";
+
+import './assets/styles/normalize.css';
+import './styles.scss';
 
 const root = document.querySelector('#root');
 const app = createApp(data);
