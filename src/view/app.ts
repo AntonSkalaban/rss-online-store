@@ -3,6 +3,8 @@ import createElement from "./helpers/createElemt";
 import createMain from "./main/createMain";
 import { IProduct } from "../model/dataType";
 
+import './app.scss'
+
 const createApp = (data: Array<IProduct>) => {
   const app = createElement('div', 'app');
   const main = createMain(data);
@@ -12,6 +14,3 @@ const createApp = (data: Array<IProduct>) => {
 }
 
 export default createApp;
-
-
- 

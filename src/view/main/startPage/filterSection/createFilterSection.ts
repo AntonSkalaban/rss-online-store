@@ -6,6 +6,8 @@ import createPriceBlock from "./filterBlocks/createPriceBlock";
 import createStockBlock from "./filterBlocks/createStockBlock"
 import { IProduct } from "../../../../model/dataType";
 
+import './filterSection.scss'
+
 const createFilterSection = (data: Array<IProduct>) => {
   const filterSection = createElement('div', 'filter-section');
 

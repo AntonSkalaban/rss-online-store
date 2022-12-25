@@ -1,5 +1,40 @@
-$blue: blue;
+@import url(./assets/styles/fonts.scss);
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: $color-light;
+  transition: 0.3s;
+}
 
 body {
-  background-color: $blue;
+  background: rgba(33, 31, 32, 1);
+  background: -moz-linear-gradient(-45deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(91,72,58,1)), color-stop(100%, rgba(38,36,37,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
+  background: linear-gradient(135deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b483a', endColorstr='#262425', GradientType=1 );
+  font: 400 $font 'Arial', sans-serif;
+  line-height: $line-height;
+  color: $color-light;
+  overflow-x: hidden;
 }

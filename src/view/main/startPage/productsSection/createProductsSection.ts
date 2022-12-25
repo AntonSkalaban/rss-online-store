@@ -3,7 +3,7 @@ import createElement from "../../../helpers/createElemt";
 import createSearchInput from "./sectionHeaderComponents/createSearchInput";
 import createSortInput from "./sectionHeaderComponents/createSortInput";
 
-import "./productsSection.css"
+import "./productsSection.scss"
 
 const createProductsSection = () => {
   const [ productsSection,  productsSectionHeader, productsSectionMain ] = createBlock('products-section');
@@ -22,4 +22,3 @@ const createProductsSection = () => {
 }
 
 export default createProductsSection;
-
