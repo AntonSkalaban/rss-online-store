@@ -14,6 +14,7 @@ const devServer = (isDev) => !isDev ? {} : {
       directory: path.join(__dirname, 'public'),
       publicPath: '/serve-public-path-url',
     },
+    historyApiFallback: true,
   },
 };
 

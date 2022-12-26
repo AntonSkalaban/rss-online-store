@@ -45,6 +45,7 @@ export const renderResetPage = () => {
 
 
 export const renderPage = () => {
+  console.log('render')
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
   const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
 

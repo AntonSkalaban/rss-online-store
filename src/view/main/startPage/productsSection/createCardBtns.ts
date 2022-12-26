@@ -15,7 +15,7 @@ const createCardBtns = (id: number) => {
 
   const editHistory = (e: Event) => {
     const target = <HTMLElement>e.target
-    history.pushState('', '', target.dataset.href);
+    history.pushState('', '', target.dataset.href + '/' + target.dataset.id);
     router();
   }
 

@@ -22,7 +22,7 @@ export const router = () => {
   const main  = document.querySelector('.main');
   if (!main) return;
   
-  const path = location.pathname;
+  const path = '/' + location.pathname.split('/')[1];
   console.log(path)
 
   if (isRoute(path)) {
@@ -36,20 +36,14 @@ export const router = () => {
   }
 }
 
-// // Update router
+// Update router
 window.addEventListener('popstate', router);
-//window.addEventListener("DOMContentLoaded", router);
+window.addEventListener("DOMContentLoaded", router);
 
 
 
-// const query = new URLSearchParams();
-
-// query.append('param1', 'bacon');
-// query.append('param2', 'eggs');
-// query.append('param3', 'cheese');
-
-// const queryString = query.toString();
-
-// const url = window.location.href + '?' + queryString;
-
-//window.location.href = url;
+// Query-param
+// window.onclick = () => {
+//   const newurl = window.location.href + '?myNewUrlQuery=1';
+//   window.history.pushState({path:newurl},'',newurl);
+// }
