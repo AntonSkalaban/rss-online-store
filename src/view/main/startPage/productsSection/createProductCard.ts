@@ -1,5 +1,6 @@
 import createElement from "../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../helpers/createBlockWithTitle";
+import createCardBtns from "./createCardBtns"; 
 
 const createProductCard = (
   id: number, title: string, category: string, brand: string, price: string,
@@ -10,8 +11,9 @@ const createProductCard = (
 
   productCard.id = String(id);
 
-  const productImg = createElement('div', 'product-img');
-  productImg.style.backgroundImage = `url(${img})`;
+  const productImgContainer = createElement('div', 'product-img-container');
+  const productImg = <HTMLImageElement>createElement('img', 'product-img');
+  productImg.src = img;
 
   const productAbout = createElement('div', 'product-about');
   const productCategory = createElement('p', 'product-about-item');
@@ -21,6 +23,8 @@ const createProductCard = (
   const productRating = createElement('p', 'product-about-item');
   const productStock = createElement('p', 'product-about-item');
 
+  const productBtns = createCardBtns(id);
+
   productCategory.textContent = `Category: ${category}`;
   productBrand.textContent = `Brand: ${brand}`;
   productPrice.textContent = `Price: ${price}`;
@@ -28,8 +32,8 @@ const createProductCard = (
   productRating.textContent = `Rating: ${rating}`;
   productStock.textContent = `Stock: ${stock}`;
 
-
-  productMain.appendChild(productImg);
+  productMain.appendChild(productImgContainer);
+  productImgContainer.appendChild(productImg);
 
   productMain.appendChild(productAbout);
   productAbout.appendChild(productCategory);
@@ -38,6 +42,8 @@ const createProductCard = (
   productAbout.appendChild(productDiscount);
   productAbout.appendChild(productRating);
   productAbout.appendChild(productStock);
+
+  productMain.appendChild(productBtns);
 
   return productCard;
 }
