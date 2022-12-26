@@ -2,8 +2,9 @@ import { renderFilteredByStock } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
-import "../filterBlocks/filterBlock.css"
-import "./rangeBlockStyle.css"
+
+import '../filterBlocks/filterBlock.scss';
+import "./rangeBlock.scss"
 
 const createStockBlock = (data: Array<IProduct>) => {
   const stocks = data
@@ -20,9 +21,9 @@ const createStockBlock = (data: Array<IProduct>) => {
 
   lowerSlider.type= 'range';
   lowerSlider.id = 'lower-stock';
-  lowerSlider.min = String(stocks[0]); 
+  lowerSlider.min = String(stocks[0]);
   lowerSlider.max = String(stocks[stocks.length - 1]);
-  lowerSlider.value = String(stocks[0]); 
+  lowerSlider.value = String(stocks[0]);
 
   upperSlider.type= 'range';
   upperSlider.id = 'upper-stock';
@@ -38,15 +39,15 @@ const createStockBlock = (data: Array<IProduct>) => {
   upperStock.textContent = `${ stocks[stocks.length - 1] }`
 
   categoryBlock.appendChild(categoryMain);
- 
-  categoryMain.appendChild(rangeSlider);
-  categoryMain.appendChild(rangeInput);
-  rangeInput.appendChild(lowerSlider);
-  rangeInput.appendChild(upperSlider);
 
   categoryMain.appendChild(pricesValues);
   pricesValues.appendChild(lowerStock);
   pricesValues.appendChild(upperStock);
+
+  categoryMain.appendChild(rangeSlider);
+  categoryMain.appendChild(rangeInput);
+  rangeInput.appendChild(lowerSlider);
+  rangeInput.appendChild(upperSlider);
 
   const filterByStock = (e:Event) => {
     const target = <HTMLInputElement>e.target;
@@ -63,7 +64,7 @@ const createStockBlock = (data: Array<IProduct>) => {
 
   lowerSlider.addEventListener('input', filterByStock);
   upperSlider.addEventListener('input', filterByStock);
- 
+
   return categoryBlock;
 };
 

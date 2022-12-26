@@ -4,4 +4,8 @@
   border-radius: 10px;
   background-color: rgb($color-brown, 0.5);
   padding: 1%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px
 }

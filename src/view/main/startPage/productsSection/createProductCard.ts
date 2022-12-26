@@ -1,6 +1,8 @@
 import createElement from "../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../helpers/createBlockWithTitle";
-import createCardBtns from "./createCardBtns"; 
+import createCardBtns from "./createCardBtns";
+
+import './productCard.scss';
 
 const createProductCard = (
   id: number, title: string, category: string, brand: string, price: string,
@@ -11,9 +13,8 @@ const createProductCard = (
 
   productCard.id = String(id);
 
-  const productImgContainer = createElement('div', 'product-img-container');
-  const productImg = <HTMLImageElement>createElement('img', 'product-img');
-  productImg.src = img;
+  const productImg = createElement('div', 'product-img');
+  productImg.style.backgroundImage = `url(${img})`;
 
   const productAbout = createElement('div', 'product-about');
   const productCategory = createElement('p', 'product-about-item');
@@ -32,8 +33,7 @@ const createProductCard = (
   productRating.textContent = `Rating: ${rating}`;
   productStock.textContent = `Stock: ${stock}`;
 
-  productMain.appendChild(productImgContainer);
-  productImgContainer.appendChild(productImg);
+  productMain.appendChild(productImg);
 
   productMain.appendChild(productAbout);
   productAbout.appendChild(productCategory);

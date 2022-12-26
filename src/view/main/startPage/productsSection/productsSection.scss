@@ -3,35 +3,28 @@
   border: 1px solid $color-dark-beige;
   border-radius: 10px;
   overflow: hidden;
-}
+  height: max-content;
 
-.products-section__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid $color-dark-beige;
-  padding: 1%;
-  background-color: $color-brown;
-}
+  &__title {
+    font-size: 24px;
+  }
 
-.products-section__main {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  flex-basis: 100%;
-  padding: 1%;
-  background-color: rgb($color-brown, 0.5);
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $color-dark-beige;
+    padding: 1%;
+    background-color: $color-brown;
+  }
 
-  .product-card {
-    max-width: 23%;
-    width: 100%;
-
-    .product-img {
-      width: 100%;
-      min-height: 250px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: 0%;
-    }
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    row-gap: 20px;
+    padding: 1%;
+    background-color: rgb($color-brown, 0.5);
   }
 }
