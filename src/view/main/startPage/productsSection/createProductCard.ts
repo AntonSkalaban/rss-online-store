@@ -1,6 +1,8 @@
 import createElement from "../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../helpers/createBlockWithTitle";
 
+import './productCard.scss';
+
 const createProductCard = (
   id: number, title: string, category: string, brand: string, price: string,
   discount: string, rating: string, stock: string, img: string

@@ -3,8 +3,10 @@ import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 
+import '../filterBlocks/filterBlock.scss';
+
 const createCategoryBlock = (data: Array<IProduct>) => {
-  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filetr-title', 'Category');
+  const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Category');
   const list = createElement('ul', 'category__list');
 
   data
@@ -25,7 +27,7 @@ const createCategoryBlock = (data: Array<IProduct>) => {
       totalItems.textContent = `${ data.filter((el) => category === el.category).length }`;
       avalibleItems.textContent = '0';
       avalibleItems.dataset.id = category.toLowerCase();
-      
+
       itemsCounter.appendChild(avalibleItems);
       itemsCounter.innerHTML += '/';
       itemsCounter.appendChild(totalItems);
