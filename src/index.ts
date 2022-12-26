@@ -42,7 +42,9 @@ export const renderResetPage = () => {
   renderProducts(data);
 }
 
-const renderPage = () => {
+
+
+export const renderPage = () => {
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
   const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
 
@@ -130,3 +132,6 @@ const renderPage = () => {
 
   renderProducts(newData);
 }
+
+
+
