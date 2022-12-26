@@ -38,3 +38,17 @@ body {
   color: $color-light;
   overflow-x: hidden;
 }
+
+.page-btn {
+  border: 1px solid $color-dark-beige;
+  border-radius: 5px;
+  background-color: $color-brown;
+  color: $color-beige;
+  text-transform: uppercase;
+  padding: 2%;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-dark-beige;
+  }
+}

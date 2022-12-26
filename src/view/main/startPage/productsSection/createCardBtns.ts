@@ -2,6 +2,8 @@ import createElement from "../../../helpers/createElemt";
 import createButton from "../../../helpers/createButton";
 import { router } from "../../../../model/router";
 
+import './cardBtns.scss';
+
 const createCardBtns = (id: number) => {
   const productBtns = createElement('div', 'product-buttons');
   const cartBtn = createButton('cart-btn', 'Add to cart');
