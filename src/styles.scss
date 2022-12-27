@@ -24,6 +24,10 @@ a {
   transition: 0.3s;
 }
 
+h2 {
+  font-size: 24px;
+}
+
 body {
   background: rgba(33, 31, 32, 1);
   background: -moz-linear-gradient(-45deg, rgba(91,72,58,1) 0%, rgba(38,36,37,1) 100%);
@@ -47,8 +51,9 @@ body {
   text-transform: uppercase;
   padding: 2%;
   cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
-    color: $color-dark-beige;
+    color: $color-yellow;
   }
 }
