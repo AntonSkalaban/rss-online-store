@@ -24,18 +24,19 @@ const renderProductsCards = (data: Array<IProduct>) => {
 
   if (!productsSectionMain) return;
   productsSectionMain.innerHTML = '';
-
+  
   data.forEach((el) => {
     const productCard = createProductCard(
       el. id, el.title, el.category, el.brand, el.price.toString(), el.discountPercentage.toString(),
       el.rating.toString(), el.stock.toString(), el.images[0],
     );
-
     productsSectionMain.appendChild(productCard);
+  
   });
 }
 
 const renderProducts = (data: Array<IProduct>) => {
+  console.log('products')
   renderProductsCards(data);
   renderSectionTitle(data);
   renderFilterdItems(data, 'category','.categoty__avalible-items');

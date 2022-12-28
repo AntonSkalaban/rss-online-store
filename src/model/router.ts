@@ -39,11 +39,3 @@ export const router = () => {
 // Update router
 window.addEventListener('popstate', router);
 window.addEventListener("DOMContentLoaded", router);
-
-
-
-// Query-param
-// window.onclick = () => {
-//   const newurl = window.location.href + '?myNewUrlQuery=1';
-//   window.history.pushState({path:newurl},'',newurl);
-// }
