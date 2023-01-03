@@ -105,7 +105,8 @@ const checkCategoryFilter = (data: Array<IProduct>, params: Array<string>) => {
       })
     } else {
       allParams.push('category=' + activeCategoryes[0]);
-      if (!allParams[0]) allParams.splice(0, 1)  
+      if (!allParams[0]) allParams.shift();
+      
     }
   } else if (!activeCategoryCheckboxes.length && categoryParams) {
     allParams = allParams.filter((params) => !params.includes('category')) 
@@ -144,13 +145,60 @@ const checkBrandFilter = (data: Array<IProduct>, params: Array<string>) => {
 
     } else {
       allParams.push('brand=' + activeBrands[0]);
-      if (!allParams[0]) allParams.splice(0, 1)  
+      if (!allParams[0]) allParams.shift();
     }
   } else if (!activeBrandCheckboxes.length && brandParams) {
     allParams = allParams.filter((params) => !params.includes('brand'))
   }
   const arr: [Array<IProduct>, Array<string> ] =  [newData, allParams]
   return arr;
+}
+
+const checkGridSize = (params: Array<string>) => {
+   const grids = Array.from(document.querySelectorAll<HTMLElement>('.grid-size'));
+  // const activeGrid = grids.find((el) => el.className.includes('active'));
+
+  let allParams = [...params];
+  
+ // if (!activeGrid) {
+  const gridSize = localStorage.getItem('gridSize');
+  console.log(gridSize)
+  
+  if (window.location.href.includes('grid')){
+    if (gridSize === 'big') {
+      localStorage.setItem('gridSize', 'big');
+    
+        allParams = allParams.map((params) => {
+
+        if (params.includes('grid')) {
+          grids.forEach((el) => {
+            if (el.dataset.size === gridSize) {
+              el.classList.add('active')
+            } else {
+              el.classList.remove('active')
+            }
+          });
+          return  'grid=' + gridSize;
+        }
+        return params;
+      })
+    }
+  } else {
+    localStorage.setItem('gridSize', 'small');
+      allParams.push('grid=' + gridSize)
+      if (!allParams[0]) allParams.shift();
+      
+      grids.forEach((el) => {
+        if (el.dataset.size === 'small') {
+          el.classList.add('active')
+        }  else {
+          el.classList.remove('active')
+        }
+      });
+  }
+  
+
+  return allParams;
 }
 
 export const renderPage = () => {
@@ -175,11 +223,11 @@ export const renderPage = () => {
   newData = searchState[0];
   allParams = searchState[1];
 
-
+  allParams = checkGridSize(allParams);
 
   if (sortInput) {
     const sortOption = sortInput.value;
-    console.log(sortOption)
+
     let sortParam: keyof IProduct;
 
     if (sortOption.includes('price')) {
