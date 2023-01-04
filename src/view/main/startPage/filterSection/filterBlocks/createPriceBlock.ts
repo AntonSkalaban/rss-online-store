@@ -1,4 +1,4 @@
-import { renderFilteredByPrice } from './../../../../../index';
+//import { renderFilteredByPrice } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
@@ -49,21 +49,21 @@ const createPriceBlock = (data: Array<IProduct>) => {
   pricesValues.appendChild(lowerPrice);
   pricesValues.appendChild(upperPrice);
 
-  const filterByPrice = (e:Event) => {
-    const target = <HTMLInputElement>e.target;
-    const value = +target.value;
+  // const filterByPrice = (e:Event) => {
+  //   const target = <HTMLInputElement>e.target;
+  //   const value = +target.value;
 
-    const differenseNumbers = prices.map((price) => Math.abs(price - value));
-    const minDifferense = Math.min(...differenseNumbers);
+  //   const differenseNumbers = prices.map((price) => Math.abs(price - value));
+  //   const minDifferense = Math.min(...differenseNumbers);
 
-    const newValue = prices[differenseNumbers.indexOf(minDifferense)];
-    target.value = String(newValue);
-    // console.log(target.value)
-    renderFilteredByPrice()
-  };
+  //   const newValue = prices[differenseNumbers.indexOf(minDifferense)];
+  //   target.value = String(newValue);
+  //   // console.log(target.value)
+  //   // renderFilteredByPrice()
+  // };
 
-  lowerSlider.addEventListener('input', filterByPrice);
-  upperSlider.addEventListener('input', filterByPrice);
+  // lowerSlider.addEventListener('input', filterByPrice);
+  // upperSlider.addEventListener('input', filterByPrice);
  
   return categoryBlock;
 };

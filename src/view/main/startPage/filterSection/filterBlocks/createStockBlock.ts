@@ -1,4 +1,4 @@
-import { renderFilteredByStock } from './../../../../../index';
+//import { renderFilteredByStock } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
@@ -48,21 +48,21 @@ const createStockBlock = (data: Array<IProduct>) => {
   pricesValues.appendChild(lowerStock);
   pricesValues.appendChild(upperStock);
 
-  const filterByStock = (e:Event) => {
-    const target = <HTMLInputElement>e.target;
-    const value = +target.value;
+  // const filterByStock = (e:Event) => {
+  //   const target = <HTMLInputElement>e.target;
+  //   const value = +target.value;
 
-    const differenseNumbers = stocks.map((price) => Math.abs(price - value));
-    const minDifferense = Math.min(...differenseNumbers);
+  //   const differenseNumbers = stocks.map((price) => Math.abs(price - value));
+  //   const minDifferense = Math.min(...differenseNumbers);
 
-    const newValue = stocks[differenseNumbers.indexOf(minDifferense)];
-    target.value = String(newValue);
+  //   const newValue = stocks[differenseNumbers.indexOf(minDifferense)];
+  //   target.value = String(newValue);
 
-    renderFilteredByStock();
-  };
+  // //  renderFilteredByStock();
+  // };
 
-  lowerSlider.addEventListener('input', filterByStock);
-  upperSlider.addEventListener('input', filterByStock);
+  // lowerSlider.addEventListener('input', filterByStock);
+  // upperSlider.addEventListener('input', filterByStock);
  
   return categoryBlock;
 };

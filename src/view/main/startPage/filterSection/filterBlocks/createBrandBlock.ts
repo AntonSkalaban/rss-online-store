@@ -1,4 +1,4 @@
-import { renderFilteredByBrand } from './../../../../../index';
+//import { renderFilteredByBrand } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
@@ -37,9 +37,9 @@ const createBrandBlock = (data: Array<IProduct>) => {
       label.innerHTML += brand.replace(brand[0], brand[0].toUpperCase());
       listItem.appendChild(itemsCounter);
 
-      const filterByBrand = () => renderFilteredByBrand();
+    // const filterByBrand = () => renderFilteredByBrand();
 
-      label.addEventListener('change', filterByBrand);
+    //  label.addEventListener('change', filterByBrand);
     })
 
   categoryMain.appendChild(list);

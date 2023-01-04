@@ -1,5 +1,5 @@
 
-import { renderPage } from '../../../../..';
+//import { renderPage } from '../../../../..';
 import createElement from '../../../../helpers/createElemt'
 
 const createProducstViewContainerts = () => {
@@ -14,12 +14,12 @@ const createProducstViewContainerts = () => {
 
   bigGrid.addEventListener('click', () => {
     localStorage.setItem('gridSize', 'big')
-    renderPage()
+ //   renderPage()
   });
 
   smallGrid.addEventListener('click', () => {
     localStorage.setItem('gridSize', 'small')
-    renderPage()
+ //   renderPage()
   });
 
   cardsViews.appendChild(bigGrid);
