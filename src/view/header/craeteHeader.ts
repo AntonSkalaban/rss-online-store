@@ -1,3 +1,4 @@
+import { cartController } from './../../controller/cartController';
 import createElement from "../helpers/createElemt";
 
 import logoImg from '../../assets/svg/logo.svg';
@@ -15,22 +16,30 @@ const createHeader = () => {
   const price = createElement('h2', 'header__price');
   const priceTotal = <HTMLSpanElement>createElement('span', 'header__price-total');
 
-  const cartImage = <HTMLImageElement>createElement('img', 'header__cart');
+  const cart = createElement('div', 'header__cart');
+  const cartImage = <HTMLImageElement>createElement('img', 'header__cart-img');
+  const cartAmount = <HTMLSpanElement>createElement('span', 'header__cart-amount');
 
   logoImage.src = logoImg;
   logoTitle.innerText = 'Online Store';
-  logo.appendChild(logoImage);
-  logo.appendChild(logoTitle);
+  logo.append(logoImage);
+  logo.append(logoTitle);
 
   price.innerText = 'Cart total: ';
   priceTotal.innerText = '0';
   price.appendChild(priceTotal);
 
   cartImage.src = cartImg;
+  cartAmount.innerText = '0';
+  cart.dataset.href = '/cart';
+  cart.append(cartImage);
+  cart.append(cartAmount);
 
-  header.appendChild(logo);
-  header.appendChild(price);
-  header.appendChild(cartImage)
+  header.append(logo);
+  header.append(price);
+  header.append(cart);
+
+  cart.addEventListener('click', (e) => cartController.handleCartClick(e))
 
   return header;
 }

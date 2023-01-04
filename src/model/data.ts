@@ -1,4 +1,6 @@
-const data = [
+import { IProduct } from './dataType';
+
+const data: IProduct[] = [
   {
     "id":1,
     "title":"iPhone 9",
