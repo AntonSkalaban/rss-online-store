@@ -3,26 +3,17 @@ import { ICart, ICartProducts, IProduct } from './../../../model/dataType';
 import createElement from "../../helpers/createElemt";
 import createButton from '../../helpers/createButton';
 
+import './cartPage.scss';
+
 export class CartPage {
   private products: ICartProducts;
-  private cartPageInner: HTMLElement;
+  private root: HTMLElement;
   private productsInner: HTMLElement;
 
-  constructor(cart: ICart) {
-    this.products = cart.products;
-    this.cartPageInner = createElement('div', 'cart-page__inner');
+  constructor(cartData: ICart) {
+    this.products = cartData.products;
+    this.root = createElement('div', 'cart-page');
     this.productsInner = createElement('div', 'cart-products__inner');
-    this.mount();
-  }
-
-  private mount() {
-    const cartPage = document.querySelector<HTMLElement>('.cart-page');
-    if(cartPage) {
-      cartPage.innerHTML = '';
-      cartPage.append(this.cartPageInner);
-      // this.cartPage.append(this.summarySection)
-      this.cartPageInner.append(this.createProductSection());
-    }
   }
 
   private createProductSection(): HTMLElement {
@@ -46,7 +37,7 @@ export class CartPage {
     const product = createElement('div', 'cart-products__item');
     const productNumber = createElement('div', 'cart-products__item-number');
     const productInner = createElement('div', 'cart-products__item-inner');
-    const productControl = createElement('div', 'cart-products__item-control');
+    const productControls = createElement('div', 'cart-products__item-controls');
     const productImg = <HTMLImageElement>createElement('img', 'cart-products__item-img');
     const productTitle = createElement('h3', 'cart-products__item-title');
     const productDescprition = createElement('div', 'cart-products__item-description');
@@ -56,7 +47,7 @@ export class CartPage {
     const productDiscount = createElement('div', 'cart-products__item-discount');
     const controlStock = createElement('div', 'cart-products__item-stock');
     const controlPrice = createElement('div', 'cart-products__item-price');
-    const controlInner = createElement('div', 'cart-products__item-inner');
+    const controlInner = createElement('div', 'cart-products__controls-inner');
     const productBtnPlus = createButton('cart-products__item-btn_plus', '+');
     const productBtnMinus = createButton('cart-products__item-btn_minus', '-');
     const productAmount = createElement('div', 'cart-products__item-amount');
@@ -65,20 +56,22 @@ export class CartPage {
     productImg.src = cartProduct.thumbnail;
     productTitle.innerText = cartProduct.title;
     productText.innerText = cartProduct.description;
-    productDiscount.innerText = `${cartProduct.discountPercentage}`;
-    productRaiting.innerText = `${cartProduct.rating}`;
-    controlStock.innerText = `${cartProduct.stock}`;
-    controlPrice.innerText = `${cartProduct.price}`;
+    productDiscount.innerText = `Discount: ${cartProduct.discountPercentage}%`;
+    productRaiting.innerText = `Raiting: ${cartProduct.rating}`;
+    controlStock.innerText = `Stock: ${cartProduct.stock}`;
+    controlPrice.innerText = `€${cartProduct.price}`;
     productAmount.innerText = `${amount}`;
 
     productInfo.append(productRaiting, productDiscount)
     productDescprition.append(productTitle, productText, productInfo);
     productInner.append(productImg, productDescprition);
     controlInner.append(productBtnPlus, productAmount, productBtnMinus);
-    productControl.append(controlStock, controlInner, controlPrice);
-    product.append(productNumber, productInner, productControl);
+    productControls.append(controlStock, controlInner, controlPrice);
+    product.append(productNumber, productInner, productControls);
 
-    productBtnPlus.addEventListener('click', () => {cartController.handleAddToCart(cartProduct.id)})
+    productBtnPlus.addEventListener('click', () => {
+      cartController.handleAddToCart(cartProduct.id);
+    })
     return product;
   }
 
@@ -87,6 +80,16 @@ export class CartPage {
       return this.createCartProduct(index, item.product, item.amount);
     });
 
+    this.productsInner.innerHTML = '';
     this.productsInner.append(...productsArr);
+  }
+
+  public getRoot() {
+    return this.root;
+  }
+
+  public mount() {
+    this.root.innerHTML = '';
+    this.root.append(this.createProductSection());
   }
 }

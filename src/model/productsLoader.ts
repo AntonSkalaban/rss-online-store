@@ -28,7 +28,7 @@ const renderProductsCards = (data: Array<IProduct>) => {
   data.forEach((el) => {
     const productCard = createProductCard(
       el. id, el.title, el.category, el.brand, el.price.toString(), el.discountPercentage.toString(),
-      el.rating.toString(), el.stock.toString(), el.images[0],
+      el.rating.toString(), el.stock.toString(), el.thumbnail,
     );
 
     productsSectionMain.appendChild(productCard);
@@ -44,5 +44,3 @@ const renderProducts = (data: Array<IProduct>) => {
 
 
 export default renderProducts;
-
-

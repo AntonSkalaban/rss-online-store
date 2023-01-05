@@ -1,0 +1,125 @@
+.cart {
+  &-page {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 2%;
+  }
+
+  &-products {
+    flex-basis: 70%;
+    border: 1px solid $color-dark-beige;
+    border-radius: 10px;
+    overflow: hidden;
+    height: max-content;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $color-dark-beige;
+      padding: 1%;
+      background-color: $color-brown;
+
+      &-title {
+        color: $color-beige;
+      }
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      column-gap: 2%;
+      border-bottom: 1px solid $color-dark-beige;
+      padding: 0.5% 1.5%;
+
+      &-number {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-brown;
+        border: 1px solid $color-dark-beige;
+        color: $color-beige;
+        font-size: 23px;
+        border-radius: 50%;
+      }
+
+      &-inner {
+        display: flex;
+        column-gap: 2%;
+        flex-grow: 1;
+        cursor: pointer;
+
+        &:hover {
+          .cart-products__item-title {
+            color: $color-orange;
+            text-shadow: none;
+          }
+        }
+      }
+
+      &-img {
+        width: 180px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid $color-dark-beige;
+      }
+
+      &-description {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      &-title {
+        margin: 0;
+        padding: 10px;
+        color: #F1CDB3;
+        text-shadow: 0 0 2px #fff;
+        border-bottom: 1px solid $color-light;
+      }
+
+      &-text {
+        padding: 7px;
+        min-height: 62px;
+        max-height: 62px;
+        overflow: hidden;
+      }
+
+      &-info {
+        display: flex;
+        justify-content: space-around;
+        color: $color-beige;
+      }
+
+      &-controls {
+        width: 15%;
+        text-align: center;
+        font-size: 20px;
+      }
+
+      &-btn_plus.page-btn,
+      &-btn_minus.page-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 35px;
+        line-height: 35px;
+        font-weight: 700;
+        border-radius: 50%;
+      }
+
+      &-amount {
+        font-size: 30px;
+        line-height: 30px;
+        color: $color-yellow;
+      }
+    }
+
+    &__controls-inner {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+  }
+}

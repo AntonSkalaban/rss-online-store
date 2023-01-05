@@ -1,5 +1,4 @@
 import { cartModel } from './../model/cartModel';
-import { CartPage } from '../view/main/cartPage/cartPage';
 import { ICart, IProduct } from './../model/dataType';
 import data from "../model/data";
 import { router } from '../model/router';
@@ -8,7 +7,7 @@ class CartController {
   private updateTotalPrise(totalSum: number): void {
     const PRISE = document.querySelector<HTMLElement>('.header__price-total');
     if (PRISE) {
-      PRISE.innerText = `${totalSum}`;
+      PRISE.innerText = `€${totalSum}`;
     }
   }
 
@@ -33,8 +32,6 @@ class CartController {
     const target = <HTMLElement>e.currentTarget;
     history.pushState('', '', target.dataset.href);
     router();
-
-    new CartPage(cartModel);
   }
 
   public getCart(): ICart {
