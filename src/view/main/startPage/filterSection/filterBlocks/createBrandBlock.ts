@@ -3,6 +3,7 @@ import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import "../filterBlocks/filterBlock.css"
+import renderPage from "../../../../..";
 
 const createBrandBlock = (data: Array<IProduct>) => {
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Brand');
@@ -37,9 +38,44 @@ const createBrandBlock = (data: Array<IProduct>) => {
       label.innerHTML += brand.replace(brand[0], brand[0].toUpperCase());
       listItem.appendChild(itemsCounter);
 
-    // const filterByBrand = () => renderFilteredByBrand();
+      const getNewUrl = (e: Event) => {
+        const target = <HTMLInputElement>e.target;
+        const value = target.value;
+        const isChecked = target.checked;
 
-    //  label.addEventListener('change', filterByBrand);
+        const url = new URL(window.location.href);
+        let allParams = url.search.substring(1).split('&');
+
+        if (isChecked) {
+          if (window.location.href.includes('brand')) {
+            allParams = allParams.map((param) => {
+              return param.includes('brand') 
+                ? `${ param }↕${ value }`
+                : param;
+            })
+          } else {
+            allParams.push(`brand=${ value }`);
+            if (!allParams[0]) allParams.shift();
+          }
+
+        } else {
+          const categoryes = allParams.find((param) => param.includes('brand'))?.split('=')[1].split('%E2%86%95');
+
+          if (categoryes && categoryes.length > 1) {
+            allParams = allParams.map((param) => {
+              return param.includes('brand') 
+                ? `brand=${ categoryes.filter((brand) => brand !== value ).join('↕') }`
+                : param;
+            });
+          } else {
+            allParams = allParams.filter((param) => !param.includes('brand'));
+          }
+        }
+
+        renderPage(allParams);
+      }
+
+      label.addEventListener('change', getNewUrl);
     })
 
   categoryMain.appendChild(list);

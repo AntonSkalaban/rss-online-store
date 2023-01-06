@@ -72,37 +72,8 @@ const createCategoryBlock = (data: Array<IProduct>) => {
         }
 
         renderPage(allParams)
-        }
-    //     if (activeCategoryCheckboxes.length) {
-    //       const  activeCategoryes = activeCategoryCheckboxes.map((el) => el.value.toLowerCase());
-    //       newData = newData.filter((product) => activeCategoryes.includes(product.category.toLowerCase()));
-        
-    //       if (categoryParams) {
-    //         const activeParams = categoryParams
-    //           .split('=')[1]
-    //           .split('%E2%86%95')
-    //           .filter((category) => activeCategoryes.includes(category))
-      
-    //         activeCategoryes.forEach((category) => {
-    //           if (!activeParams.includes(category)) activeParams.push(category)
-    //         })
-      
-    //         allParams = allParams.map((params) => {
-    //           if (params.includes('category')) {
-    //             return  'category=' + activeParams.join('↕')
-    //           }
-    //           return params
-    //         })
-    //       } else {
-    //         allParams.push('category=' + activeCategoryes[0]);
-    //         if (!allParams[0]) allParams.shift();
-            
-    //       }
-    //     } else if (!activeCategoryCheckboxes.length && categoryParams) {
-    //       allParams = allParams.filter((params) => !params.includes('category')) 
-    //     }
-    //     const arr: [Array<IProduct>, Array<string> ] =  [newData, allParams]
-    //     return arr;
+      }
+
 
       label.addEventListener('change', getNewUrl);
     })

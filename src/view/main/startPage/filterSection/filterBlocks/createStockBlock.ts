@@ -4,6 +4,7 @@ import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import "../filterBlocks/filterBlock.css"
 import "./rangeBlockStyle.css"
+import renderPage from "../../../../..";
 
 const createStockBlock = (data: Array<IProduct>) => {
   const stocks = data
@@ -22,21 +23,17 @@ const createStockBlock = (data: Array<IProduct>) => {
   lowerSlider.id = 'lower-stock';
   lowerSlider.min = String(stocks[0]); 
   lowerSlider.max = String(stocks[stocks.length - 1]);
-  lowerSlider.value = String(stocks[0]); 
 
   upperSlider.type= 'range';
   upperSlider.id = 'upper-stock';
   upperSlider.min = String(stocks[0]);
   upperSlider.max = String(stocks[stocks.length - 1]);
-  upperSlider.value =  String(stocks[stocks.length - 1]);
 
   const pricesValues = createElement('div', 'range-values');
   const lowerStock = createElement('p', 'lower-stock-value');
   const upperStock = createElement('p', 'upper-stock-value');
 
-  lowerStock.textContent = `${ stocks[0] }`
-  upperStock.textContent = `${ stocks[stocks.length - 1] }`
-
+  
   categoryBlock.appendChild(categoryMain);
  
   categoryMain.appendChild(rangeSlider);
@@ -48,21 +45,45 @@ const createStockBlock = (data: Array<IProduct>) => {
   pricesValues.appendChild(lowerStock);
   pricesValues.appendChild(upperStock);
 
-  // const filterByStock = (e:Event) => {
-  //   const target = <HTMLInputElement>e.target;
-  //   const value = +target.value;
+  const getNewUrl = (e:Event) => {
+    const target = <HTMLInputElement>e.target;
+    const value = +target.value;
 
-  //   const differenseNumbers = stocks.map((price) => Math.abs(price - value));
-  //   const minDifferense = Math.min(...differenseNumbers);
+    const differenseNumbers = stocks.map((price) => Math.abs(price - value));
+    const minDifferense = Math.min(...differenseNumbers);
 
-  //   const newValue = stocks[differenseNumbers.indexOf(minDifferense)];
-  //   target.value = String(newValue);
+    const newValue = stocks[differenseNumbers.indexOf(minDifferense)];
+    target.value = String(newValue);
 
-  // //  renderFilteredByStock();
-  // };
+  
+    // getNewUrl
+    const url = new URL(window.location.href);
+    let allParams = url.search.substring(1).split('&');
 
-  // lowerSlider.addEventListener('input', filterByStock);
-  // upperSlider.addEventListener('input', filterByStock);
+    const lowerStockSlider = document.querySelector<HTMLInputElement>('.lower-stock-slider');
+    const upperStockSlider = document.querySelector<HTMLInputElement>('.upper-stock-slider');
+
+    if (!lowerStockSlider || !upperStockSlider) return;
+    const minStock = Math.min(+lowerStockSlider.value, +upperStockSlider.value);
+    const maxStock = Math.max(+lowerStockSlider.value, +upperStockSlider.value);
+  
+    if (window.location.href.includes('stock')) {
+      allParams = allParams.map((params) => {
+        return params.includes('stock') 
+          ? `stock=${ minStock }%E2%86%95${ maxStock }`
+          : params;
+      });
+
+    } else {
+      allParams.push(`stock=${ minStock }%E2%86%95${ maxStock }`);
+      if (!allParams[0]) allParams.shift();
+    }
+
+    renderPage(allParams);
+  }
+
+  lowerSlider.addEventListener('input', getNewUrl);
+  upperSlider.addEventListener('input', getNewUrl);
  
   return categoryBlock;
 };

@@ -6,27 +6,28 @@ const createProductCard = (
   id: number, title: string, category: string, brand: string, price: string,
   discount: string, rating: string, stock: string, img: string
 ) => {
-  
-  const isSmall = localStorage.getItem('gridSize') === 'small';
+  const grids  = document.querySelectorAll<HTMLElement>('.grid-size');
+  const isBig = grids[0].classList.contains('active');
+
   const [productCard, productMain] = createBlockWitdthTitle('product-card', 'product-title', title);
 
   const productImgContainer = createElement('div', 'product-img-container');
 
   const productBtns = createCardBtns(id);
  
-  productCard.style.width = !isSmall ? '23%' : '15%';
+  productCard.style.width = isBig ? '23%' : '15%';
 
   productImgContainer.style.width = '100%';
-  productImgContainer.style.height = !isSmall ? '250px' : '70px'
+  productImgContainer.style.height = isBig ? '250px' : '70px';
   productImgContainer.style.backgroundPosition = 'center';
-  productImgContainer.style.backgroundImage = `url(${img})` 
-  productImgContainer.style.backgroundSize = 'cover'
+  productImgContainer.style.backgroundImage = `url(${img})`;
+  productImgContainer.style.backgroundSize = 'cover';
   productImgContainer.style.backgroundPosition = 'center';
 
 
   productMain.appendChild(productImgContainer);
 
-  if (!isSmall) {
+  if (isBig) {
     const productAbout = createElement('div', 'product-about');
     const productCategory = createElement('p', 'product-about-item');
     const productBrand = createElement('p', 'product-about-item');
