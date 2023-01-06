@@ -1,7 +1,8 @@
-import { renderFilteredByCategory } from './../../../../../index';
+//import { renderFilteredByCategory } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
+import renderPage from "../../../../..";
 
 import '../filterBlocks/filterBlock.scss';
 
@@ -38,9 +39,45 @@ const createCategoryBlock = (data: Array<IProduct>) => {
       label.innerHTML += category;
       listItem.appendChild(itemsCounter);
 
-      const filterByCategory = () => renderFilteredByCategory();
+      const getNewUrl = (e: Event) => {
+        const target = <HTMLInputElement>e.target;
+        const value = target.value;
+        const isChecked = target.checked;
 
-      label.addEventListener('change', filterByCategory);
+        const url = new URL(window.location.href);
+        let allParams = url.search.substring(1).split('&');
+
+        if (isChecked) {
+          if (window.location.href.includes('category')) {
+            allParams = allParams.map((param) => {
+              return param.includes('category') 
+                ? `${ param }↕${ value }`
+                : param;
+            })
+          } else {
+            allParams.push(`category=${ value }`);
+            if (!allParams[0]) allParams.shift();
+          }
+
+        } else {
+          const categoryes = allParams.find((param) => param.includes('category'))?.split('=')[1].split('%E2%86%95');
+
+          if (categoryes && categoryes.length > 1) {
+            allParams = allParams.map((param) => {
+              return param.includes('category') 
+                ? `category=${ categoryes.filter((category) => category !== value ).join('↕') }`
+                : param;
+            });
+          } else {
+            allParams = allParams.filter((param) => !param.includes('category'));
+          }
+        }
+
+        renderPage(allParams)
+      }
+
+
+      label.addEventListener('change', getNewUrl);
     })
 
   categoryMain.appendChild(list);

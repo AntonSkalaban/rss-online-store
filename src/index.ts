@@ -2,137 +2,60 @@ import { IProduct } from './model/dataType';
 import data from './model/data';
 import renderProducts from './model/productsLoader';
 import createApp from "./view/app";
-
+import { filrerData, filrerSlider, searchData, sortData } from './model/changeData';
+import { renderFilterValue, renderSearchValue, renderSortValue } from './controller/updateValues';
 import './assets/styles/normalize.css';
 import './styles.scss';
+
 
 const root = document.querySelector('#root');
 const app = createApp(data);
 
 if (root) root.appendChild(app)
 
-renderProducts(data);
+const renderPage = (params: Array<string>) => {
+  let newData: Array<IProduct> = [...data];
 
+  params.forEach((param) => {
 
-export const renderSearchProducts = () => {
-  renderPage()
-}
-
-export const renderSortProducts = () => {
-  renderPage()
-}
-
-export const renderFilteredByBrand = () => {
-  renderPage()
-}
-
-export const renderFilteredByCategory = () => {
-  renderPage()
-}
-
-export const renderFilteredByPrice = () => {
-  renderPage()
-}
-
-export const renderFilteredByStock = () => {
-  renderPage()
-}
-
-export const renderResetPage = () => {
-  renderProducts(data);
-}
-
-
-
-export const renderPage = () => {
-  console.log('render')
-  const searchInput = document.querySelector<HTMLInputElement>('.search-input');
-  const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
-
-  const categoryCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.category__checkbox'));
-  const brandCheckboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.brand__checkbox'));
-
-  const lowerPriceSlider = document.querySelector<HTMLInputElement>('.lower-price-slider');
-  const upperPriceSlider = document.querySelector<HTMLInputElement>('.upper-price-slider');
-  const lowerPrice = document.querySelector<HTMLInputElement>('.lower-price-value');
-  const upperPrice = document.querySelector<HTMLInputElement>('.upper-price-value');
-
-  const lowerStockSlider = document.querySelector<HTMLInputElement>('.lower-stock-slider');
-  const upperStockSlider = document.querySelector<HTMLInputElement>('.upper-stock-slider');
-  const lowerStock = document.querySelector<HTMLInputElement>('.lower-stock-value');
-  const upperStock = document.querySelector<HTMLInputElement>('.upper-stock-value');
-
-  let newData = [...data];
-
-  if (searchInput) {
-    const searchVal = searchInput.value.toUpperCase();
-    if (searchVal) {
-      newData = newData.filter((el) => {
-        return (
-          el.title.toUpperCase().includes(searchVal) || el.description.toUpperCase().includes(searchVal)
-          || el.price.toString().includes(searchVal) || el.brand.toUpperCase().includes(searchVal)
-          || el.category.toUpperCase().includes(searchVal)
-        )
-      })
-    }
-  }
-
-  if (sortInput) {
-    const sortOption = sortInput.value;
-
-    let sortParam: keyof IProduct;
-
-    if (sortOption.includes('price')) {
-      sortParam = 'price';
-    } else if (sortOption.includes('rating')) {
-      sortParam = 'rating';
-    } else {
-      sortParam = 'discountPercentage';
+    if (param.includes('sort=')) {
+      newData = sortData(param, newData);
+      renderSortValue(param);
     }
 
-    if (sortOption.includes('ASC')) {
-      newData = newData.sort((a, b) => +a[sortParam] - +b[sortParam]);
-    } else {
-      newData = newData.sort((a, b) => +b[sortParam] - +a[sortParam]);
+    if (param.includes('search=')) {
+      const value = param.split('=')[1];
+
+      newData = searchData(newData, value);
+      renderSearchValue(value)
     }
-  }
 
-  const activeCategoryCheckboxes = categoryCheckboxes.filter((el) => el.checked) //forEach - classList.toggle()
+    if (param.includes('category=')) {
+      newData = filrerData(newData, param, 'category');
+      renderFilterValue(param, 'category', '.category__checkbox');
+    }
 
-  if (activeCategoryCheckboxes.length) {
-    const  activeCategoryes = activeCategoryCheckboxes.map((el) => el.value.toUpperCase());
-    newData = newData.filter((product) => activeCategoryes.includes(product.category.toUpperCase()));
-  }
+    if (param.includes('brand=')) {
+      newData = filrerData(newData, param, 'brand');
+      renderFilterValue(param, 'brand', '.brand__checkbox');
+    }
 
-  const activeBrandCheckboxes = brandCheckboxes.filter((el) => el.checked) //forEach - classList.toggle()
+    if (param.includes('price=')) {
+      const [ minPrice, maxPrice ] = param.split('=')[1].split('%E2%86%95');
+      newData = filrerSlider(newData, 'price', minPrice, maxPrice);
+    }
 
-  if (activeBrandCheckboxes.length) {
-    const  activeCategoryes = activeBrandCheckboxes.map((el) => el.value.toUpperCase());
-    newData = newData.filter((product) => activeCategoryes.includes(product.brand.toUpperCase()));
-  }
+    if (param.includes('stock=')) {
+      const [ minStock, maxStock ] = param.split('=')[1].split('%E2%86%95');
+      newData = filrerSlider(newData, 'stock', minStock, maxStock);
+    }
+  })
+  
+  const url = new URL(window.location.href);
+  const newurl = url.origin + ((params[0]) ? '/?' + params.join('&') : '');
+  window.history.pushState({path:newurl}, '', newurl);
 
-  if(lowerPriceSlider && upperPriceSlider && lowerPrice && upperPrice) {
-    const minPrice = Math.min(+lowerPriceSlider.value, +upperPriceSlider.value);
-    const maxPrice = Math.max(+lowerPriceSlider.value, +upperPriceSlider.value);
-
-    lowerPrice.textContent = `${ minPrice }$`;
-    upperPrice.textContent = `${ maxPrice }$`;
-
-    newData = newData.filter((el) => el.price >= minPrice && el.price <= maxPrice);
-  }
-
-  if(lowerStockSlider && upperStockSlider && lowerStock && upperStock) {
-    const maxStock = Math.max(+lowerStockSlider.value, +upperStockSlider.value);
-    const minStock = Math.min(+lowerStockSlider.value, +upperStockSlider.value);
-
-    lowerStock.textContent = `${ minStock }`;
-    upperStock.textContent = `${ maxStock }`;
-
-    newData = newData.filter((el) => el.stock >= minStock && el.stock <= maxStock);
-  }
-
-  renderProducts(newData);
+  renderProducts(newData, params); 
 }
 
-
-
+export default renderPage;
