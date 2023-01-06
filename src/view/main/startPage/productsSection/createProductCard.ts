@@ -1,6 +1,8 @@
 import createElement from "../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../helpers/createBlockWithTitle";
-import createCardBtns from "./createCardBtns"; 
+import createCardBtns from "./createCardBtns";
+
+import './productCard.scss';
 
 const createProductCard = (
   id: number, title: string, category: string, brand: string, price: string,
@@ -13,6 +15,7 @@ const createProductCard = (
 
   const productImgContainer = createElement('div', 'product-img-container');
 
+
   const productBtns = createCardBtns(id);
  
   productCard.style.width = isBig ? '23%' : '15%';
@@ -23,6 +26,7 @@ const createProductCard = (
   productImgContainer.style.backgroundImage = `url(${img})`;
   productImgContainer.style.backgroundSize = 'cover';
   productImgContainer.style.backgroundPosition = 'center';
+
 
 
   productMain.appendChild(productImgContainer);

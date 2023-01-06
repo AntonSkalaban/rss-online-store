@@ -6,6 +6,7 @@ import "../filterBlocks/filterBlock.css"
 import "./rangeBlockStyle.css"
 import renderPage from "../../../../..";
 
+
 const createStockBlock = (data: Array<IProduct>) => {
   const stocks = data
     .map((el) => el.stock)
@@ -21,7 +22,7 @@ const createStockBlock = (data: Array<IProduct>) => {
 
   lowerSlider.type= 'range';
   lowerSlider.id = 'lower-stock';
-  lowerSlider.min = String(stocks[0]); 
+  lowerSlider.min = String(stocks[0]);
   lowerSlider.max = String(stocks[stocks.length - 1]);
 
   upperSlider.type= 'range';
@@ -35,15 +36,11 @@ const createStockBlock = (data: Array<IProduct>) => {
 
   
   categoryBlock.appendChild(categoryMain);
- 
-  categoryMain.appendChild(rangeSlider);
-  categoryMain.appendChild(rangeInput);
-  rangeInput.appendChild(lowerSlider);
-  rangeInput.appendChild(upperSlider);
 
   categoryMain.appendChild(pricesValues);
   pricesValues.appendChild(lowerStock);
   pricesValues.appendChild(upperStock);
+
 
   const getNewUrl = (e:Event) => {
     const target = <HTMLInputElement>e.target;
@@ -82,9 +79,11 @@ const createStockBlock = (data: Array<IProduct>) => {
     renderPage(allParams);
   }
 
+
   lowerSlider.addEventListener('input', getNewUrl);
   upperSlider.addEventListener('input', getNewUrl);
  
+
   return categoryBlock;
 };
 

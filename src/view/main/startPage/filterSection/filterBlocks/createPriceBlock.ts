@@ -21,7 +21,7 @@ const createPriceBlock = (data: Array<IProduct>) => {
 
   lowerSlider.type= 'range';
   lowerSlider.id = 'lower-price';
-  lowerSlider.min = String(prices[0]); 
+  lowerSlider.min = String(prices[0]);
   lowerSlider.max = String(prices[prices.length - 1]);
  // lowerSlider.value = String(prices[0]); 
 
@@ -40,11 +40,6 @@ const createPriceBlock = (data: Array<IProduct>) => {
   // upperPrice.textContent = `${ prices[prices.length - 1] }$`
 
   categoryBlock.appendChild(categoryMain);
- 
-  categoryMain.appendChild(rangeSlider);
-  categoryMain.appendChild(rangeInput);
-  rangeInput.appendChild(lowerSlider);
-  rangeInput.appendChild(upperSlider);
 
   categoryMain.appendChild(pricesValues);
   pricesValues.appendChild(lowerPrice);

@@ -3,7 +3,7 @@
   border: 1px solid $color-dark-beige;
   border-radius: 10px;
   overflow: hidden;
-}
+  height: max-content;
 
 .products-section__header {
   display: flex;
@@ -41,4 +41,5 @@
 
 .active {
   color: yellow;
+
 }

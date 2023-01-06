@@ -2,8 +2,8 @@
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
-import "../filterBlocks/filterBlock.css"
-import renderPage from "../../../../..";
+
+import '../filterBlocks/filterBlock.scss';
 
 const createBrandBlock = (data: Array<IProduct>) => {
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Brand');
@@ -27,7 +27,7 @@ const createBrandBlock = (data: Array<IProduct>) => {
       totalItems.textContent = `${ data.filter((el) => brand.toLowerCase() === el.brand.toLowerCase()).length }`;
       avalibleItems.textContent = '0';
       avalibleItems.dataset.id = brand.toLowerCase();
-      
+
       itemsCounter.appendChild(avalibleItems);
       itemsCounter.innerHTML += '/';
       itemsCounter.appendChild(totalItems);
