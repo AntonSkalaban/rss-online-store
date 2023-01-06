@@ -24,16 +24,3 @@ export interface ICart {
   totalAmount: number,
   totalSum: number,
 }
-
-/* export interface CartProducts {
-  [key: string]: {
-    amount: number;
-    product: IProduct;
-  };
-}
-
-export interface ICart {
-  products: CartProducts,
-  totalAmount: number,
-  totalSum: number,
-} */

@@ -96,7 +96,7 @@ class CartModel {
     this.totalSum = 0;
   }
 
-  getCart(): ICart {
+  public getCart(): ICart {
     return {
       products: this.products,
       totalAmount: this.totalAmount,
@@ -104,7 +104,7 @@ class CartModel {
     };
   }
 
-  addProduct(product: IProduct): ICart {
+  public addProduct(product: IProduct): ICart {
     if (!this.products[product.title]) {
       this.products[product.title] = {
         product,
@@ -116,6 +116,26 @@ class CartModel {
 
     this.totalAmount += 1;
     this.totalSum += product.price;
+
+    return this.getCart();
+  }
+
+  public deleteProduct(product: IProduct): void {
+    delete this.products?.[product.title];
+  }
+
+  public increaseProduct(product: IProduct): ICart {
+    this.products[product.title].amount += 1;
+    this.totalAmount += 1;
+    this.totalSum += product.price;
+
+    return this.getCart();
+  }
+
+  public decreaseProduct(product: IProduct): ICart {
+    this.products[product.title].amount -= 1;
+    this.totalAmount -= 1;
+    this.totalSum -= product.price;
 
     return this.getCart();
   }

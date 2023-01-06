@@ -50,11 +50,11 @@
         column-gap: 2%;
         flex-grow: 1;
         cursor: pointer;
+        transition: 0.3s;
 
         &:hover {
           .cart-products__item-title {
-            color: $color-orange;
-            text-shadow: none;
+            color: $color-yellow;
           }
         }
       }
@@ -75,8 +75,8 @@
       &-title {
         margin: 0;
         padding: 10px;
-        color: #F1CDB3;
-        text-shadow: 0 0 2px #fff;
+        color: $color-orange;
+        text-shadow: 0 0 2px $color-dark-beige;
         border-bottom: 1px solid $color-light;
       }
 

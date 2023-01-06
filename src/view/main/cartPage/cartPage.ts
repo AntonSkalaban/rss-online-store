@@ -43,10 +43,11 @@ export class CartPage {
     const productDescprition = createElement('div', 'cart-products__item-description');
     const productText = createElement('div', 'cart-products__item-text');
     const productInfo = createElement('div', 'cart-products__item-info');
+    const productPrice = createElement('div', 'cart-products__item-price');
     const productRaiting = createElement('div', 'cart-products__item-raiting');
     const productDiscount = createElement('div', 'cart-products__item-discount');
     const controlStock = createElement('div', 'cart-products__item-stock');
-    const controlPrice = createElement('div', 'cart-products__item-price');
+    const controlTotalPrice = createElement('div', 'cart-products__item-totalPrice');
     const controlInner = createElement('div', 'cart-products__controls-inner');
     const productBtnPlus = createButton('cart-products__item-btn_plus', '+');
     const productBtnMinus = createButton('cart-products__item-btn_minus', '-');
@@ -56,22 +57,30 @@ export class CartPage {
     productImg.src = cartProduct.thumbnail;
     productTitle.innerText = cartProduct.title;
     productText.innerText = cartProduct.description;
+    productPrice.innerText = `€${cartProduct.price}`;
     productDiscount.innerText = `Discount: ${cartProduct.discountPercentage}%`;
     productRaiting.innerText = `Raiting: ${cartProduct.rating}`;
     controlStock.innerText = `Stock: ${cartProduct.stock}`;
-    controlPrice.innerText = `€${cartProduct.price}`;
+    controlTotalPrice.innerText = `€${cartProduct.price * amount}`;
     productAmount.innerText = `${amount}`;
 
-    productInfo.append(productRaiting, productDiscount)
+    productInfo.append(productPrice ,productRaiting, productDiscount)
     productDescprition.append(productTitle, productText, productInfo);
     productInner.append(productImg, productDescprition);
     controlInner.append(productBtnPlus, productAmount, productBtnMinus);
-    productControls.append(controlStock, controlInner, controlPrice);
+    productControls.append(controlStock, controlInner, controlTotalPrice);
     product.append(productNumber, productInner, productControls);
 
     productBtnPlus.addEventListener('click', () => {
-      cartController.handleAddToCart(cartProduct.id);
-    })
+      const currentAmount: number = this.products[cartProduct.title].amount;
+      cartController.handleIncreaseProduct(productAmount, controlTotalPrice ,cartProduct, currentAmount);
+    });
+
+    productBtnMinus.addEventListener('click', () => {
+      const currentAmount: number = this.products[cartProduct.title].amount;
+      cartController.handleDecreaseProduct(product ,productAmount, controlTotalPrice ,cartProduct, currentAmount);
+    });
+
     return product;
   }
 

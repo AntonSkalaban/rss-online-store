@@ -28,6 +28,37 @@ class CartController {
     }
   }
 
+  public handleIncreaseProduct(PRODUCT_AMOUNT: HTMLElement, PRODUCT_TOTAL_PRICE: HTMLElement,
+    product: IProduct, currentAmount: number): void {
+    if(product.stock === currentAmount) {
+      return;
+    }
+
+    const {totalSum, totalAmount, products} = cartModel.increaseProduct(product);
+    const productAmount: number = products[product.title].amount;
+    this.updateTotalPrise(totalSum);
+    this.updateTotalAmount(totalAmount);
+    PRODUCT_AMOUNT.innerText = `${productAmount}`;
+    PRODUCT_TOTAL_PRICE.innerText = `€${productAmount * product.price}`
+  }
+
+  public handleDecreaseProduct(PRODUCT: HTMLElement, PRODUCT_AMOUNT: HTMLElement, PRODUCT_TOTAL_PRICE: HTMLElement,
+    product: IProduct, currentAmount: number): void {
+
+    const {totalSum, totalAmount, products} = cartModel.decreaseProduct(product);
+    const productAmount: number = products[product.title].amount;
+    this.updateTotalPrise(totalSum);
+    this.updateTotalAmount(totalAmount);
+
+    if(currentAmount === 1) {
+      cartModel.deleteProduct(product);
+      PRODUCT.remove();
+      return;
+    }
+    PRODUCT_AMOUNT.innerText = `${productAmount}`;
+    PRODUCT_TOTAL_PRICE.innerText = `€${productAmount * product.price}`
+  }
+
   public handleCartClick(e: Event) {
     const target = <HTMLElement>e.currentTarget;
     history.pushState('', '', target.dataset.href);
