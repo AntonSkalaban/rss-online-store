@@ -3,7 +3,8 @@ import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 
-import '../filterBlocks/filterBlock.scss';
+//import '../filterBlocks/filterBlock.scss';
+import renderPage from "../../../../..";
 
 const createBrandBlock = (data: Array<IProduct>) => {
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Brand');

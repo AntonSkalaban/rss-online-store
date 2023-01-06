@@ -24,7 +24,9 @@ export const router = () => {
     main.appendChild(startPage)
     renderPage(allParams);
   } else if (path.includes('http://localhost:8080/about')) {
-    const productDetails = createProductDetailsSection(+path.split('/')[2]);
+    console.log(path.split('/'))
+    const productDetails = createProductDetailsSection(+(path.split('/').length - 1));
+    console.log(productDetails)
     if (productDetails) main.appendChild(productDetails)
   }else {
     // history.replaceState('', '', '/');

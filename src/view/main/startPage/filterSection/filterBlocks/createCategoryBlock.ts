@@ -4,7 +4,7 @@ import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import renderPage from "../../../../..";
 
-import '../filterBlocks/filterBlock.scss';
+//import '../filterBlocks/filterBlock.scss';
 
 const createCategoryBlock = (data: Array<IProduct>) => {
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle('filter-block', 'filter-title', 'Category');

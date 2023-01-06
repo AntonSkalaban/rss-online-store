@@ -2,8 +2,8 @@
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
-import "../filterBlocks/filterBlock.css"
-import "./rangeBlockStyle.css"
+//import "../filterBlocks/filterBlock.scss"
+//import "./rangeBlockStyle.scss"
 import renderPage from "../../../../..";
 
 const createPriceBlock = (data: Array<IProduct>) => {
@@ -41,9 +41,15 @@ const createPriceBlock = (data: Array<IProduct>) => {
 
   categoryBlock.appendChild(categoryMain);
 
+  categoryMain.appendChild(rangeSlider);
+  categoryMain.appendChild(rangeInput);
+  rangeInput.appendChild(lowerSlider);
+  rangeInput.appendChild(upperSlider);
+
   categoryMain.appendChild(pricesValues);
   pricesValues.appendChild(lowerPrice);
   pricesValues.appendChild(upperPrice);
+
 
   const getNewUrl = (e:Event) => {
     const target = <HTMLInputElement>e.target;
