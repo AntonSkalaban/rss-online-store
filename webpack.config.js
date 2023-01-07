@@ -12,9 +12,13 @@ const devServer = (isDev) => !isDev ? {} : {
     port: 8080,
     static: {
       directory: path.join(__dirname, 'public'),
-      publicPath: '/serve-public-path-url',
+      publicPath: '/',
     },
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: '/index.html' }, // all request to index.html
+      ],
+    },
   },
 };
 
@@ -30,6 +34,7 @@ module.exports = ({ development }) => ({
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/[hash][ext]',
+    publicPath: '/',
   },
   module: {
     rules: [

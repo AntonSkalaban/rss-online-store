@@ -1,21 +1,38 @@
 import createElement from "../../../helpers/createElemt"
+import createCardlDetails from "./createModalBlock.ts/createCardDetails";
+import createPersonalDetails from "./createModalBlock.ts/createPersonalDetails";
 
-// const createInputsBlock = () => {
-//   const inputsBlock = createElement('div', 'modal__inputs-block');
+const createModal = () => {
+  const modal = createElement('div', 'modal');
 
-//   const nameBlock = createElement('div', 'modal__input-block');
+  const productPersonalDetailsTitle = createElement('h4');
+  const productPersonalDetails = createPersonalDetails();
+  const cardTitle = createElement('h4');
+  const productCard = createCardlDetails();
 
-//   const nameInput = <HTMLInputElement>createElement('input', 'modal__inputs-name');
-//   const nameError = createElement('p', 'name-error');
-//   nameInput.type = 'text';
-//   nameInput.placeholder = 'name';
-//   nameError.textContent = '';
+  cardTitle.textContent = 'Credit card details';
+  productPersonalDetailsTitle.textContent = 'Product details';
 
-  
-//   const phoneInput = createElement('input', 'modal__inputs-phone');
-//   const adressInput = createElement('input', 'modal__inputs-adress');
-//   const emailInput = createElement('input', 'modal__inputs-email');
+  modal.appendChild(productPersonalDetailsTitle);
+  modal.appendChild(productPersonalDetails);
+  modal.appendChild(cardTitle);
+  modal.appendChild(productCard);
 
-//   // nameInput.ariaPlaceholder = 'Name';
-//   // phoneInput.ariaPlaceholder = 'Phone number';
-// }
+
+//Draft styles 
+  modal.style.width = '70%';
+  modal.style.height = '90%';
+
+  modal.style.position = 'absolute';
+  modal.style.bottom = '5%';
+
+  modal.style.display = 'flex';
+  modal.style.flexDirection = 'column';
+  modal.style.justifyContent = 'space-between'
+  modal.style.alignItems = 'center';
+
+
+  return modal;
+}
+
+export default createModal;

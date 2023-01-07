@@ -2,7 +2,7 @@ import { IProduct } from './../../../../model/dataType';
 import createElement from "../../../helpers/createElemt"
 import createBlockWitdthTitle from '../../../helpers/createBlockWithTitle';
 import createButton from '../../../helpers/createButton';
-
+import createModal from '../modal/createModal';
 
 export const createProductImgsBlock = (product: IProduct) => {
   const productImgsBlock = createElement('div', 'product-details__images');
@@ -70,14 +70,21 @@ export const createCartBlock = (product: IProduct) => {
 
   const price = createElement('p', 'product-details__price');
   const cartBtn = createButton('product-details-btn', 'Add to cart');
-  const byeBtn = createButton('product-details-btn', 'Buy now');
+  const buyBtn = createButton('product-details-btn', 'Buy now');
   cartBtn.classList.add('product-details-cart-btn');
-  byeBtn.classList.add('product-details-bue-btn');
+  buyBtn.classList.add('product-details-buy-btn');
   price.textContent = `$${product.price}.00`;
+
+
+  buyBtn.addEventListener('click', () => {
+    const modal = createModal();
+    const main = document.querySelector('main')
+    main?.appendChild(modal);
+  });
 
   cartBlock.appendChild(price);
   cartBlock.appendChild(cartBtn);
-  cartBlock.appendChild(byeBtn);
+  cartBlock.appendChild(buyBtn);
 
   return cartBlock;
 }

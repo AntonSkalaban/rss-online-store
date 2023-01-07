@@ -1,15 +1,13 @@
 import createProductCard from "../view/main/startPage/productsSection/createProductCard";
 import { IProduct } from "./dataType";
 
-
-
 const renderSectionTitle = (data: Array<IProduct>) => {
   const sectionTitle = document.querySelector('.products-section__title');
   if (sectionTitle) sectionTitle.textContent = `Found: ${ data.length }`;
 }
 
 const renderFilterdItems = (
-  data: Array<IProduct>, key: keyof IProduct, keyCheckboxes: string, keyClassName: string
+  data: Array<IProduct>, key: keyof IProduct, keyClassName: string
 ) => {
   const avalibleItems = document.querySelectorAll<HTMLElement>(keyClassName);
   avalibleItems.forEach((el) => {
@@ -84,11 +82,10 @@ const renderProductsCards = (data: Array<IProduct>) => {
   }
 }
 
-
 const renderProducts = (data: Array<IProduct>, params: Array<string>) => {
   renderSectionTitle(data);
-  renderFilterdItems(data, 'category', '.category__checkbox', '.categoty__avalible-items');
-  renderFilterdItems(data, 'brand', '.brand__checkbox', '.brand__avalible-items');
+  renderFilterdItems(data, 'category', '.category__avalible-items');
+  renderFilterdItems(data, 'brand', '.brand__avalible-items');
   renderFilteredSlider(
     data, 'price', '.lower-price-slider', '.upper-price-slider', '.lower-price-value', '.upper-price-value'
   );

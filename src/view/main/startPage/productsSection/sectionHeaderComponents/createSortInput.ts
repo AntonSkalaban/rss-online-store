@@ -1,10 +1,11 @@
-// import { renderSortProducts, renderPage } from './../../../../../index';
 import createElement from "../../../../helpers/createElemt";
-import { IProduct } from '../../../../../model/dataType';
-import renderPage from "../../../../..";
-
+import { getSortedUrl } from "../../../../../controller/startPage/changeUrl";
 
 const createSortInput =  () => {
+  const getNewUrl = (e: Event) => {
+    getSortedUrl(e)
+  };
+
   const sortInput = <HTMLSelectElement>createElement('select', 'sort-input');
   sortInput.classList.add('main-input');
   
@@ -42,30 +43,6 @@ const createSortInput =  () => {
   sortInput.add(sotrByRatingDESC); 
   sortInput.add(sotrByDiscountASC);
   sortInput.add(sotrByDiscountDESC); 
-
-  const getNewUrl = (e: Event) => {
-    const sortOption = <HTMLInputElement>e.target
-    const optionValue = sortOption?.value; 
-
-    const url = new URL(window.location.href);
-    let allParams = url.search.substring(1).split('&');
-
-
-    if (window.location.href.includes('sort')) {
-      allParams = allParams.map((params) => {
-        return params.includes('sort')
-          ? `sort=${ optionValue }`
-          : params;
-      });
-
-    } else {
-      allParams.push(`sort=${ optionValue }`);
-
-      if (!allParams[0]) allParams.shift();
-    }
-
-    renderPage(allParams)
-  };
 
   sortInput.addEventListener('change', getNewUrl);
 

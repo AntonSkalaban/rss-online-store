@@ -1,10 +1,10 @@
-import { IProduct } from "../model/dataType";
+import { IProduct } from "../../model/dataType";
 
 export const renderSortValue = (param: string) => {
-    const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
-    if (sortInput) {
-      sortInput.value = param.split('=')[1];
-    }
+  const sortInput = document.querySelector<HTMLInputElement>('.sort-input');
+  if (sortInput) {
+    sortInput.value = param.split('=')[1];
+  }
 }
 
 export const renderSearchValue = (value: string) => { 

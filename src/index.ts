@@ -3,7 +3,7 @@ import data from './model/data';
 import renderProducts from './model/productsLoader';
 import createApp from "./view/app";
 import { filrerData, filrerSlider, searchData, sortData } from './model/changeData';
-import { renderFilterValue, renderSearchValue, renderSortValue } from './controller/updateValues';
+import { renderFilterValue, renderSearchValue, renderSortValue } from './controller/startPage/updateValues';
 import './assets/styles/normalize.css';
 import './styles.scss';
 
