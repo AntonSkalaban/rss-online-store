@@ -1,5 +1,5 @@
-import { checkValid, hideError } from "../../../../../controller/modal/formHandler";
-import createElement from "../../../../helpers/createElemt"
+import { checkValid, hideError } from "../../../../controller/modal/formHandler";
+import createElement from "../../../helpers/createElemt";
 
 const createPersonalDetails = () => {
   
