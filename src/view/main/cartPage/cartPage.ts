@@ -6,14 +6,22 @@ import createButton from '../../helpers/createButton';
 import './cartPage.scss';
 
 export class CartPage {
+  private cart: ICart;
   private products: ICartProducts;
   private root: HTMLElement;
   private productsInner: HTMLElement;
 
   constructor(cartData: ICart) {
+    this.cart = cartData;
     this.products = cartData.products;
     this.root = createElement('div', 'cart-page');
     this.productsInner = createElement('div', 'cart-products__inner');
+  }
+
+  private createEmptyCartText(): HTMLElement {
+    const emptyCartText = createElement('div', 'cart-empty-text')
+    emptyCartText.innerText = 'There are no products in the cart.';
+    return emptyCartText;
   }
 
   private createProductSection(): HTMLElement {
@@ -84,8 +92,39 @@ export class CartPage {
     return product;
   }
 
+  private createCartSummary(totalAmount: number, totalSum: number): HTMLElement {;
+    const summary = createElement('div', 'cart-summary');
+    const summaryHeader = createElement('div', 'cart-summary__header');
+    const summaryHeaderTitle = createElement('h2', 'cart-summary__header-title');
+    const summaryInner = createElement('div', 'cart-summary__inner');
+    const summaryAmount = createElement('div', 'cart-summary__amount');
+    const summartAmountValue = <HTMLSpanElement>createElement('span', 'cart-summary__amount-value');
+    const summarySum = createElement('div', 'cart-summary__sum');
+    const summartSumValue = <HTMLSpanElement>createElement('span', 'cart-summary__sum-value');
+    const summartPromoInput = <HTMLInputElement>createElement('input', 'cart-summary__promo-input');
+    const summartPromoText = createElement('div', 'cart-summary__promo-text');
+    const summaryButton = createButton('cart-summary__button', 'Buy now');
+
+    summaryHeaderTitle.innerText = 'Summary';
+    summaryAmount.innerText = 'Products: '
+    summarySum.innerText = 'Total: '
+    summartAmountValue.innerText = `${totalAmount}`;
+    summartSumValue.innerText = `€${totalSum}`;
+    summartPromoInput.type = 'search';
+    summartPromoInput.placeholder = 'Enter promo code';
+    summartPromoText.innerText = `Promo for test: 'RS', 'EPM'`;
+
+    summaryHeader.append(summaryHeaderTitle);
+    summaryAmount.append(summartAmountValue);
+    summarySum.append(summartSumValue);
+    summaryInner.append(summaryAmount, summarySum, summartPromoInput, summartPromoText, summaryButton);
+    summary.append(summaryHeader, summaryInner);
+
+    return summary;
+  }
+
   private renderCartProducts(products: ICartProducts) {
-    const productsArr = Object.values(products).map((item, index) => {
+    const productsArr: HTMLElement[] = Object.values(products).map((item, index) => {
       return this.createCartProduct(index, item.product, item.amount);
     });
 
@@ -99,6 +138,11 @@ export class CartPage {
 
   public mount() {
     this.root.innerHTML = '';
-    this.root.append(this.createProductSection());
+
+    if (this.cart.totalAmount <= 0) {
+      this.root.append(this.createEmptyCartText());
+      return;
+    }
+    this.root.append(this.createProductSection(), this.createCartSummary(this.cart.totalAmount, this.cart.totalSum));
   }
 }
