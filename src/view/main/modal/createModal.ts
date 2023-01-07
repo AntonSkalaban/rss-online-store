@@ -1,4 +1,4 @@
-import createElement from "../../../helpers/createElemt"
+import createElement from "../../helpers/createElemt";
 import createCardlDetails from "./createModalBlock.ts/createCardDetails";
 import createPersonalDetails from "./createModalBlock.ts/createPersonalDetails";
 
