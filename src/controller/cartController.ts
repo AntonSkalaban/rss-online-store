@@ -51,7 +51,7 @@ class CartController {
 
   public handleIncreaseProduct(PRODUCT_AMOUNT: HTMLElement, PRODUCT_TOTAL_PRICE: HTMLElement,
     product: IProduct, currentAmount: number): void {
-    if(product.stock === currentAmount) {
+    if(product.stock <= currentAmount) {
       return;
     }
 
@@ -82,7 +82,7 @@ class CartController {
       this.showCartEmtyText(CART_PAGE);
     }
 
-    if(currentAmount === 1) {
+    if(currentAmount <= 1) {
       cartModel.deleteProduct(product);
       PRODUCT.remove();
       return;
@@ -95,6 +95,10 @@ class CartController {
     const target = <HTMLElement>e.currentTarget;
     history.pushState('', '', target.dataset.href);
     router();
+  }
+
+  public getLocalCartStorage(): void {
+    cartModel.getLocalCartStorage();
   }
 
   public getCart(): ICart {

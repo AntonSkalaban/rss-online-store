@@ -7,13 +7,11 @@ import './cartPage.scss';
 
 export class CartPage {
   private cart: ICart;
-  private products: ICartProducts;
   private root: HTMLElement;
   private productsInner: HTMLElement;
 
   constructor(cartData: ICart) {
     this.cart = cartData;
-    this.products = cartData.products;
     this.root = createElement('div', 'cart-page');
     this.productsInner = createElement('div', 'cart-products__inner');
   }
@@ -28,7 +26,7 @@ export class CartPage {
     const productsSection = createElement('div' ,'cart-products');
 
     productsSection.append(this.createProductSectionHeader(), this.productsInner);
-    this.renderCartProducts(this.products)
+    this.renderCartProducts(this.cart.products)
     return productsSection;
   }
 
@@ -80,12 +78,12 @@ export class CartPage {
     product.append(productNumber, productInner, productControls);
 
     productBtnPlus.addEventListener('click', () => {
-      const currentAmount: number = this.products[cartProduct.title].amount;
+      const currentAmount: number = this.cart.products[cartProduct.title].amount;
       cartController.handleIncreaseProduct(productAmount, controlTotalPrice ,cartProduct, currentAmount);
     });
 
     productBtnMinus.addEventListener('click', () => {
-      const currentAmount: number = this.products[cartProduct.title].amount;
+      const currentAmount: number = this.cart.products[cartProduct.title].amount;
       cartController.handleDecreaseProduct(product ,productAmount, controlTotalPrice ,cartProduct, currentAmount);
     });
 
@@ -138,6 +136,10 @@ export class CartPage {
 
   public mount() {
     this.root.innerHTML = '';
+
+    if (localStorage.getItem('cart')) {
+      cartController.getLocalCartStorage();
+    }
 
     if (this.cart.totalAmount <= 0) {
       this.root.append(this.createEmptyCartText());

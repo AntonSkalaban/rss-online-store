@@ -1,58 +1,73 @@
-import { IProduct, ICartProducts, ICart } from './dataType';
+import { IProduct, ICart } from './dataType';
 
 class CartModel {
-  products: ICartProducts;
-  totalAmount: number;
-  totalSum: number;
+  cart: ICart;
 
   constructor() {
-    this.products = {};
-    this.totalAmount = 0;
-    this.totalSum = 0;
+    this.cart = {
+      products: {},
+      totalAmount: 0,
+      totalSum: 0,
+    }
+
+    this.getLocalCartStorage();
+  }
+
+  public getLocalCartStorage(): void {
+    if (localStorage.getItem('cart')) {
+      const savedCart = JSON.parse(localStorage.getItem('cart') as 'string');
+      this.cart.products = savedCart.products;
+      this.cart.totalAmount = savedCart.totalAmount;
+      this.cart.totalSum = savedCart.totalSum;
+    }
   }
 
   public getCart(): ICart {
-    return {
-      products: this.products,
-      totalAmount: this.totalAmount,
-      totalSum: this.totalSum,
-    };
+    return this.cart;
   }
 
   public addProduct(product: IProduct): ICart {
-    if (!this.products[product.title]) {
-      this.products[product.title] = {
+    if (!this.cart.products[product.title]) {
+      this.cart.products[product.title] = {
         product,
         amount: 1,
       };
-    } else if (this.products[product.title]) {
-      this.products[product.title].amount += 1;
+    } else if (this.cart.products[product.title]) {
+      this.cart.products[product.title].amount += 1;
     }
 
-    this.totalAmount += 1;
-    this.totalSum += product.price;
+    this.cart.totalAmount += 1;
+    this.cart.totalSum += product.price;
 
+    this.setLocalCartStorage(this.getCart());
     return this.getCart();
   }
 
   public deleteProduct(product: IProduct): void {
-    delete this.products?.[product.title];
+    delete this.cart.products?.[product.title];
+    this.setLocalCartStorage(this.getCart());
   }
 
   public increaseProduct(product: IProduct): ICart {
-    this.products[product.title].amount += 1;
-    this.totalAmount += 1;
-    this.totalSum += product.price;
+    this.cart.products[product.title].amount += 1;
+    this.cart.totalAmount += 1;
+    this.cart.totalSum += product.price;
 
+    this.setLocalCartStorage(this.getCart());
     return this.getCart();
   }
 
   public decreaseProduct(product: IProduct): ICart {
-    this.products[product.title].amount -= 1;
-    this.totalAmount -= 1;
-    this.totalSum -= product.price;
+    this.cart.products[product.title].amount -= 1;
+    this.cart.totalAmount -= 1;
+    this.cart.totalSum -= product.price;
 
+    this.setLocalCartStorage(this.getCart());
     return this.getCart();
+  }
+
+  public setLocalCartStorage(cart: ICart): void {
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 }
 

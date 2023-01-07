@@ -7,7 +7,7 @@ import { cartModel } from './cartModel';
 
 const startPage = createStartPage(data);
 const about = createElement('h1');
-const cartPage = new CartPage(cartModel);
+const cartPage = new CartPage(cartModel.getCart());
 const cartPageEl = cartPage.getRoot();
 about.textContent = 'ABOUT TITLE'
 
