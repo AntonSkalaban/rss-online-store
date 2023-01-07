@@ -23,7 +23,7 @@ const createSliderBlock = (data: Array<IProduct>, key: keyof IProduct) => {
     .map((el) => el[key])
     .filter((el, index, arr) => index === arr.indexOf(el))
     .sort((a,b) => +a - +b);
-
+console.log(rangeValues)
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle(
     'filter-block', 'filter-title', `${ key.replace(key[0], key[0].toUpperCase()) }`
   );

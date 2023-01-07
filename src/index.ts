@@ -9,7 +9,7 @@ import './styles.scss';
 
 
 const root = document.querySelector('#root');
-const app = createApp(data);
+const app = createApp();
 
 if (root) root.appendChild(app)
 

@@ -38,7 +38,7 @@ const createPersonalDetails = () => {
   const block = createElement('div', 'personal-details')
 
   const nameRow = createElement('div', 'modal-row');
-  const nameInput = <HTMLInputElement>createElement('input', 'name-input');
+  const nameInput = <HTMLInputElement>createElement('input', 'modal-input');
   const nameError = createElement('p', 'name-error');
   nameError.classList.add('error');
     
@@ -60,21 +60,21 @@ const createPersonalDetails = () => {
 
   nameInput.placeholder = 'Name';
   nameError.textContent = 'Name error';
-  nameError.style.display = 'none';
+  //nameError.style.display = 'none';
 
   numberInput.type = 'tel';
   numberInput.placeholder = 'Phone number';
   numberError.textContent = 'Number error';
-  numberError.style.display = 'none';
+  //numberError.style.display = 'none';
 
   adressInput.placeholder = 'Devilery address';
   adressError.textContent = 'Adress error';
-  adressError.style.display = 'none';
+  //adressError.style.display = 'none';
 
   emailInput.type = "email";
   emailInput.placeholder = 'E-mail';
   emailError.textContent = 'E-mail error';
-  emailError.style.display = 'none';
+  //emailError.style.display = 'none';
 
   block.appendChild(nameRow);
   nameRow.appendChild(nameInput);
@@ -98,7 +98,6 @@ const createPersonalDetails = () => {
   numberInput.addEventListener('change', checkNumberValid);
   numberInput.addEventListener('input', removeNumberError);
 
-  
   adressInput.addEventListener('change', checkAdressValid);
   adressInput.addEventListener('input', removeAdressError);
 

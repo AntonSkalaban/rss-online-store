@@ -9,6 +9,7 @@ const url = new URL(window.location.href);
 const allParams = url.search.substring(1).split('&');
 
 export const router = () => {
+
   const main  = document.querySelector('.main');
   if (!main) return;
   
