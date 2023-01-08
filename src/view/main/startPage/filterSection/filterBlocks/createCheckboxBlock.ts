@@ -16,8 +16,8 @@ const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
   const list = createElement('ul', `${ key }__list`);
 
   data
-    .map(el => el[key])
-    .filter((el, index, arr) => arr.indexOf(el) === index)
+    .map(el => String(el[key]).toLowerCase())
+    .filter((el, index, arr) => arr.indexOf(String(el).toLowerCase()) === index)
     .forEach((props) => {
       const listItem = createElement('li', `${ key }__list-item`);
       const label = createElement('label', `${ key }__label`);

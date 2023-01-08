@@ -34,5 +34,5 @@ export const filrerData = (data: Array<IProduct>, param: string, key: keyof IPro
 }
 
 export const filrerSlider = (data: Array<IProduct>, key: keyof IProduct, minVal: string, maxVal: string) => {
-  return data.filter((product) => product.price >= +minVal && product[key] <= +maxVal);
+  return data.filter((product) => product[key] >= +minVal && product[key] <= +maxVal);
 }
