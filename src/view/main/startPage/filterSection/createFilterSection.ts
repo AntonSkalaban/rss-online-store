@@ -1,22 +1,19 @@
 import createElement from "../../../helpers/createElemt";
 import createFilterBtnsBlock from './filterBtns/createFilterBtnsBlock'
-import createCategoryBlock from "./filterBlocks/createCategoryBlock";
-import createBrandBlock from "./filterBlocks/createBrandBlock";
-import createPriceBlock from "./filterBlocks/createPriceBlock";
-import createStockBlock from "./filterBlocks/createStockBlock"
+import createCheckboxBlock from "./filterBlocks/createCheckboxBlock";
 import { IProduct } from "../../../../model/dataType";
-
 import './filterSection.scss'
+import createSliderBlock from "./filterBlocks/createSliderBlock";
+
 
 const createFilterSection = (data: Array<IProduct>) => {
   const filterSection = createElement('div', 'filter-section');
-
   const filterBtnsBlock = createFilterBtnsBlock();
 
-  const filterBlock = createCategoryBlock(data);
-  const brandBlock = createBrandBlock(data);
-  const priceBlock = createPriceBlock(data);
-  const stockBlock = createStockBlock(data);
+  const filterBlock = createCheckboxBlock(data, 'category');
+  const brandBlock = createCheckboxBlock(data, 'brand');
+  const priceBlock = createSliderBlock(data, 'price');
+  const stockBlock = createSliderBlock(data, 'stock');
 
   filterSection.appendChild(filterBtnsBlock)
   filterSection.appendChild(filterBlock);

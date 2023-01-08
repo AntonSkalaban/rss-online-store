@@ -1,12 +1,16 @@
+import { getSearchedUrl } from "../../../../../controller/startPage/changeUrl";
 import createElement from "../../../../helpers/createElemt";
-import { renderSearchProducts } from "../../../../../index";
 
 const createSearchInput = () => {
-  const searchInput = createElement('input', 'search-input');
+  const getNewUrl = (e: Event) => {
+    getSearchedUrl(e);
+  }
 
-  const searchProducts = (e: Event) => renderSearchProducts();
+  const searchInput = <HTMLInputElement>createElement('input', 'search-input');
+  searchInput.placeholder = 'Search...';
 
-  searchInput.addEventListener('keyup', searchProducts);
+  searchInput.addEventListener('keyup', getNewUrl);
+  
   return searchInput;
 }
 

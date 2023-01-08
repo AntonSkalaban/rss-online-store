@@ -1,7 +1,7 @@
 import createElement from "./createElemt";
 
 const createButton = (btnClassName: string, btnTittle: string) => {
-  const btn = createElement('button', 'page-btn');
+  const btn = <HTMLButtonElement>createElement('button', 'page-btn');
   btn.classList.add(btnClassName)
   btn.textContent = btnTittle;
 

@@ -90,7 +90,7 @@ export class CartPage {
     return product;
   }
 
-  private createCartSummary(totalAmount: number, totalSum: number): HTMLElement {;
+  private createCartSummary(totalAmount: number, totalSum: number): HTMLElement {
     const summary = createElement('div', 'cart-summary');
     const summaryHeader = createElement('div', 'cart-summary__header');
     const summaryHeaderTitle = createElement('h2', 'cart-summary__header-title');
