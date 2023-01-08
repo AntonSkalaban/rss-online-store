@@ -1,14 +1,13 @@
-import { checkValid, hideError } from "../../../../controller/modal/formHandler";
+import { checkValid, hideError, checkLength } from "../../../../controller/modal/formHandler";
 import createElement from "../../../helpers/createElemt";
 
 
 const createCardlDetails = () => {
 
-  const checkNumber = (e: Event) => {
-    checkValid(e, /^\d{16}$/, numberError);
-
-    const target = <HTMLInputElement>e.target;
-    const firstDigit = target.value[0];
+  // Выбор картинок для картыж
+  const checkNumberValid = (e: Event) => {
+    const value = (<HTMLInputElement>e.target)?.value.trim();
+    const firstDigit = value[0];
 
     if (firstDigit === '1') {
       cardImg.src = ''
@@ -17,74 +16,133 @@ const createCardlDetails = () => {
     } else if (firstDigit === '3') {
       cardImg.src = '';
     }
+
+    checkValid(value, /^\d{16}$/, numberError);
   }
 
-  const checkDate = (e: Event) => {
-    checkValid(e, /^\d{1}[0-2]{1}\/\d{2}$/, dateError);
+  const checkDateValid = (e: Event) => {
+    const value = (<HTMLInputElement>e.target)?.value.trim();
+
+    checkValid(value, /^\d{1}[0-2]{1}\/\d{2}$/, dateError);
   }
 
-  const removeDetaError = (e: Event) => {
+  const checkCvvValid = (e: Event) => {
+    const value = (<HTMLInputElement>e.target)?.value.trim();
+
+    checkValid(value, /^\d{3}$/, cvvError);
+  }
+
+  const inputNumberHandler = (e: Event) => {
     const target = <HTMLInputElement>e.target;
-    if (target.value.length === 2) target.value += '/';
+    const value = target.value.trim();
+
+    checkLength(target, value, 16);
+    hideError(value, /^\d{16}$/ , numberError)
+  }
+
+  const inputDateHandler = (e: Event) => {
+    const target = <HTMLInputElement>e.target;
+    const value = target.value.trim();
+
+    const lastEl = value[value.length-1];
+    if (
+      isNaN(+lastEl) && lastEl !== '/'
+    ) target.value = value.substring(0, value.length - 1);
+
+    if (
+      value.length === 2 && !isNaN(+value[0]) && !isNaN(+value[1])
+    ) target.value += '/';
+
+    checkLength(target, value, 5);
+    hideError(value, /^\d{1}[0-2]{1}\/\d{2}$/ , dateError)
+  }
+
+  const inputCvvHandler = (e: Event) => {
+    const target = <HTMLInputElement>e.target;
+    const value = target.value.trim();
     
-    hideError(e, /^\d{1}[0-2]{1}\/\d{2}$/ , dateError)
+    checkLength(target, value, 3);
+    hideError(value, /^\d{3}/ , cvvError)
   }
 
   const cardBlock = createElement('div', 'card-details');
-  const cardTopRow = createElement('div', 'card-details__number');
-  const cardBotttomRow = createElement('div', 'card-details__number');
+
+  const cardTopRow = createElement('div', 'card-details__top-row');
 
   const cardImgContainer = createElement('div', 'card-details__card-img-container');
   const cardImg = <HTMLImageElement>createElement('img', 'card-img');
   const numberInput = <HTMLInputElement>createElement('input', 'card-details__number-input');
-  const numberError = createElement('p', 'card-number-error');
-  numberError.classList.add('error');
+  const numberError = createElement('p', 'error');
 
+
+  const cardBotttomRow = createElement('div', 'card-details__bottom-row');
+
+  const cardDateContainer = createElement('div', 'card-details__deta-container');
   const dateLabel= createElement('label', 'card-details__date-label');
   const dateInput = <HTMLInputElement>createElement('input', 'card-details__date-input');
-  const dateError = createElement('p', 'card-date-error');
-  dateError.classList.add('error');
+  const dateError = createElement('p', 'error');
 
+  const cardCvvContainer = createElement('div', 'card-details__cvv-container');
   const cvvLabel= createElement('label', 'card-details__number-label');
   const cvvInput = <HTMLInputElement>createElement('input', 'card-details__cvv-input');
-  const cvvError = createElement('p', 'card-cvv-error');
-  cvvError.classList.add('error');
+  const cvvError = createElement('p', 'error');
 
   cardImg.src = '' //placeholderImg
+  numberInput.type = 'number';
   numberInput.placeholder= 'Card number';
   numberError.textContent = 'number error';
 
-  dateLabel.textContent = 'Valid:';
   dateInput.placeholder = ' MM/YY';
   dateError.textContent = 'valid error';
 
-  cvvLabel.textContent = 'CVV:';
+  cvvInput.type = 'number';
   cvvInput.placeholder = ' XXX';
   cvvError.textContent = 'cvv error';
 
   cardBlock.appendChild(cardTopRow);
   cardBlock.appendChild(cardBotttomRow);
 
+  /* Не знаю как правильно вложить элементы в topRow из-за
+    блока div(номарноли ли div класть в label?), 
+    так что создай контейнеры для верхней строки сама.
+
+    Нижнюю строку предпологал сделать так:
+  <bottomRow
+    <cardDateContainer:                 <cardCvvContainer
+      <dataLabel <input/> />              <cvvLabel <input/> />
+      <dateError/>                        <cvvError/>
+     />                                 />
+  />
+  */
   cardTopRow.appendChild(cardImgContainer);
   cardImgContainer.appendChild(cardImg);
   cardTopRow.appendChild(numberInput);
-
-  cardBotttomRow.appendChild(dateLabel);
-  cardBotttomRow.appendChild(dateInput);
-
-  cardBotttomRow.appendChild(cvvLabel);
-  cardBotttomRow.appendChild(cvvInput);
-
   cardBlock.appendChild(numberError);
-  cardBlock.appendChild(dateError);
-  cardBlock.appendChild(cvvError);
 
-  numberInput.addEventListener('change', checkNumber);
-  dateInput.addEventListener('change', checkDate);
-  dateInput.addEventListener('input', removeDetaError);
-//  cvvInput.addEventListener('change', checkCvv);
+  cardBotttomRow.appendChild(cardDateContainer);
+  cardDateContainer.appendChild(dateLabel);
+  cardDateContainer.appendChild(dateError);
+  dateLabel.textContent = 'Valid:';
+  dateLabel.appendChild(dateInput);
+
+  cardBotttomRow.appendChild(cardCvvContainer);
+  cardCvvContainer.appendChild(cvvLabel);
+  cardDateContainer.appendChild(cvvError);
+  cvvLabel.textContent = 'CVV:';
+  cvvLabel.appendChild(cvvInput);
+
+  numberInput.addEventListener('change', checkNumberValid);
+  numberInput.addEventListener('input', inputNumberHandler);
+
+  dateInput.addEventListener('change', checkDateValid);
+  dateInput.addEventListener('input', inputDateHandler);
+
+  cvvInput.addEventListener('change', checkCvvValid);
+  cvvInput.addEventListener('input', inputCvvHandler);
 
   return cardBlock;
 }
 
 export default createCardlDetails;
+
+
