@@ -1,8 +1,8 @@
 import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
-//import "../filterBlocks/filterBlock.scss"
-//import "./rangeBlockStyle.scss"
+import "../filterBlocks/filterBlock.scss"
+import "./rangeBlock.scss"
 import { getSliderUrl } from "../../../../../controller/startPage/changeUrl";
 
 const createSliderBlock = (data: Array<IProduct>, key: keyof IProduct) => {
@@ -23,7 +23,6 @@ const createSliderBlock = (data: Array<IProduct>, key: keyof IProduct) => {
     .map((el) => el[key])
     .filter((el, index, arr) => index === arr.indexOf(el))
     .sort((a,b) => +a - +b);
-console.log(rangeValues)
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle(
     'filter-block', 'filter-title', `${ key.replace(key[0], key[0].toUpperCase()) }`
   );
@@ -60,7 +59,7 @@ console.log(rangeValues)
 
   lowerSlider.addEventListener('input', sliderHandler);
   upperSlider.addEventListener('input', sliderHandler);
- 
+
   return categoryBlock;
 };
 

@@ -47,13 +47,13 @@ body {
   border: 1px solid $color-dark-beige;
   border-radius: 5px;
   background-color: $color-brown;
-  color: $color-beige;
+  color: $color-dark-beige;
   text-transform: uppercase;
   padding: 2%;
   cursor: pointer;
   transition: 0.3s;
 
   &:hover {
-    color: $color-yellow;
+    color: $color-orange;
   }
 }

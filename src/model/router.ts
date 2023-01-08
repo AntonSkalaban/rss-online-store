@@ -1,9 +1,9 @@
 import createStartPage from "../view/main/startPage/createStartPage";
+import { CartPage } from "../view/main/cartPage/cartPage";
 import createProductDetailsSection from "../view/main/productDetails/createProductDetailsSection"
-import data from "./data";
 import  renderPage  from "../index";
-
-
+import data from "./data";
+import { cartModel } from './cartModel';
 
 const url = new URL(window.location.href);
 const allParams = url.search.substring(1).split('&');
@@ -12,7 +12,9 @@ export const router = () => {
 
   const main  = document.querySelector('.main');
   if (!main) return;
-  
+
+  const cartPage = new CartPage(cartModel.getCart());
+
   main.innerHTML = '';
 
   const path = window.location.pathname;
@@ -26,11 +28,15 @@ export const router = () => {
     const productDetails = createProductDetailsSection(+path.split('/')[2]);
     if (productDetails) main.appendChild(productDetails);
 
-  }else {
+  } else if (path.includes('/cart')) {
+    main.append(cartPage.getRoot())
+    cartPage.mount();
+
+  } else {
     // history.replaceState('', '', '/');
     // router()
   }
-  
+
 }
 // Update router
 window.addEventListener('popstate', router);

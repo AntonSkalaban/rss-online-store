@@ -1,3 +1,5 @@
+import { ICart } from './../../model/dataType';
+import { cartController } from './../../controller/cartController';
 import createElement from "../helpers/createElemt";
 
 import logoImg from '../../assets/svg/logo.svg';
@@ -5,7 +7,7 @@ import cartImg from '../../assets/svg/shopping-cart.svg';
 
 import './header.scss';
 
-const createHeader = () => {
+const createHeader = (cartData: ICart) => {
   const header = createElement('header', 'header');
 
   const logo = createElement('a', 'header__logo');
@@ -15,22 +17,30 @@ const createHeader = () => {
   const price = createElement('h2', 'header__price');
   const priceTotal = <HTMLSpanElement>createElement('span', 'header__price-total');
 
-  const cartImage = <HTMLImageElement>createElement('img', 'header__cart');
+  const cart = createElement('div', 'header__cart');
+  const cartImage = <HTMLImageElement>createElement('img', 'header__cart-img');
+  const cartAmount = <HTMLSpanElement>createElement('span', 'header__cart-amount');
 
   logoImage.src = logoImg;
   logoTitle.innerText = 'Online Store';
-  logo.appendChild(logoImage);
-  logo.appendChild(logoTitle);
+  logo.append(logoImage);
+  logo.append(logoTitle);
 
   price.innerText = 'Cart total: ';
-  priceTotal.innerText = '0';
+  priceTotal.innerText = `€${cartData.totalSum}`;
   price.appendChild(priceTotal);
 
   cartImage.src = cartImg;
+  cartAmount.innerText = `${cartData.totalAmount}`;
+  cart.dataset.href = '/cart';
+  cart.append(cartImage);
+  cart.append(cartAmount);
 
-  header.appendChild(logo);
-  header.appendChild(price);
-  header.appendChild(cartImage)
+  header.append(logo);
+  header.append(price);
+  header.append(cart);
+
+  cart.addEventListener('click', (e) => cartController.handleCartClick(e))
 
   return header;
 }

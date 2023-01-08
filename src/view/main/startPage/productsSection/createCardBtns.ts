@@ -1,6 +1,7 @@
 import createElement from "../../../helpers/createElemt";
 import createButton from "../../../helpers/createButton";
 import { router } from "../../../../model/router";
+import { cartController } from "../../../../controller/cartController";
 
 import './cardBtns.scss';
 
@@ -19,7 +20,7 @@ const createCardBtns = (id: number) => {
     router();
   }
 
-  cartBtn.addEventListener('click', (e: Event) => console.log(e.target))
+  cartBtn.addEventListener('click', () => cartController.handleAddToCart(id))
   detailsBtn.addEventListener('click', (e) => editHistory(e))
 
   productBtns.appendChild(cartBtn);

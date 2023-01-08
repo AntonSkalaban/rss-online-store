@@ -3,7 +3,7 @@ import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import { getFilteredUrl } from "../../../../../controller/startPage/changeUrl";
 
-//import '../filterBlocks/filterBlock.scss';
+import '../filterBlocks/filterBlock.scss';
 
 const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
   const getNewUrl = (e: Event) => {
@@ -30,8 +30,8 @@ const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
       const totalItems = createElement('span', `${ key }__total-items`);
       const avalibleItems =  createElement('span', `${ key }__avalible-items`);
 
-      totalItems.textContent = `${ 
-        data.filter((el) => String(props).toLowerCase() === String(el[key]).toLowerCase()).length 
+      totalItems.textContent = `${
+        data.filter((el) => String(props).toLowerCase() === String(el[key]).toLowerCase()).length
       }`;
       avalibleItems.textContent = '0';
       avalibleItems.dataset.id = String(props).toLowerCase();

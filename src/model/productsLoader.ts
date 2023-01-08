@@ -98,5 +98,3 @@ const renderProducts = (data: Array<IProduct>, params: Array<string>) => {
 
 
 export default renderProducts;
-
-
