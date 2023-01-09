@@ -1,0 +1,128 @@
+.modal {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  width: 55%;
+  text-align: center;
+  background-color: $color-brown;
+  border: 1px solid $color-dark-beige;
+  border-radius: 10px;
+
+  h4 {
+    font-size: 25px;
+    color: $color-yellow;
+    margin: 20px 0;
+  }
+
+  .personal-details,
+  .card-details {
+    width: 80%;
+    margin: 0 auto 35px;
+  }
+
+  .modal-row,
+  .adress-row  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .error {
+      flex-grow: 1;
+      text-align: right;
+    }
+  }
+
+  .modal-row > input,
+  .adress-row > input {
+    flex-grow: 1;
+    padding: 9px 35px;
+    text-align: center;
+    color: $color-beige;
+    font-size: 20px;
+    border: 1px solid $color-dark-beige;
+    border-radius: 25px;
+    background-color: $color-brown;
+
+    &::placeholder {
+      color: $color-light;
+    }
+  }
+
+  .card-details {
+    background: rgb(0,9,36);
+    background: linear-gradient(90deg,rgb(0,9,36) 6%,rgb(9,9,121) 34%,rgb(0,212,255) 100%);
+    margin: 0 auto 10px;
+    border: 1px solid $color-dark-beige;
+    border-radius: 10px;
+    width: 45%;
+    padding: 20px;
+
+    &__top-row {
+      display: flex;
+      justify-content: space-between;
+      column-gap: 5px;
+      margin-bottom: 40px;
+    }
+
+    &__bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-img {
+      width: 45px;
+      height: 29px;
+      border-radius: 5px;
+      object-fit: cover;
+      display: flex;
+    }
+
+    &__number-input {
+      flex-grow: 1;
+    }
+
+    & input {
+      padding: 2px 15px;
+      text-align: center;
+      color: $color-black;
+      font-size: 20px;
+      border: 1px solid $color-dark-beige;
+      border-radius: 8px;
+      background-color:beige;
+
+      &::placeholder {
+        color: $color-dark-brown;
+      }
+    }
+
+    &__deta-container,
+    &__cvv-container {
+      height: 55px;
+      width: 40%;
+
+      & label {
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+
+      & input {
+        width: 110px;
+        height: 22px;
+        font-size: 18px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .error {
+    color: red;
+    display: none;
+    margin: 0;
+    font-size: 20px;
+  }
+}

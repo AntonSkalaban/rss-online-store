@@ -78,7 +78,8 @@ export const createCartBlock = (product: IProduct) => {
   const buyNow = () => {
 
     editHistory('/cart');
-    
+
+    cartController.handleAddToCart(product.id);
     const modal = createModal();
     const main = document.querySelector('main')
     main?.appendChild(modal);

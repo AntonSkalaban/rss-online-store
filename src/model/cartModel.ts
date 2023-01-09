@@ -82,6 +82,14 @@ class CartModel {
     return this.getCart();
   }
 
+  public clearCart(): ICart {
+    this.cart.products = {};
+    this.cart.totalAmount = 0;
+    this.cart.totalSum = 0;
+
+    return this.getCart();
+  }
+
   public isProductInCart(title: string): boolean {
     if (this.cart.products[title]) {
       return true;

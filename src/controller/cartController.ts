@@ -39,6 +39,18 @@ class CartController {
     CART_PAGE.append(CART_EMTY_TEXT);
   }
 
+  public handleAddToCart(id: number): void {
+    const product: IProduct | undefined = data.find(product => product.id === id);
+
+    if (product) {
+      if(!cartModel.isProductInCart(product.title)) {
+        const {totalSum, totalAmount} = cartModel.addProduct(product);
+        this.updateTotalPrise(totalSum);
+        this.updateTotalAmount(totalAmount);
+      }
+    }
+  }
+
   public handleAddDropToCart(BTN: HTMLElement , id: number): void {
     const product: IProduct | undefined = data.find(product => product.id === id);
 
@@ -98,6 +110,12 @@ class CartController {
     }
     PRODUCT_AMOUNT.innerText = `${productAmount}`;
     PRODUCT_TOTAL_PRICE.innerText = `€${productAmount * product.price}`
+  }
+
+  public handleClearCart() {
+    const {totalSum, totalAmount} = cartModel.clearCart();
+    this.updateTotalPrise(totalSum);
+    this.updateTotalAmount(totalAmount);
   }
 
   public handleCartClick(e: Event) {
