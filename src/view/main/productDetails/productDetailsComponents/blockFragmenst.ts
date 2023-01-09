@@ -1,3 +1,4 @@
+import { cartController } from './../../../../controller/cartController';
 import { IProduct } from './../../../../model/dataType';
 import createElement from "../../../helpers/createElemt"
 import createBlockWitdthTitle from '../../../helpers/createBlockWithTitle';
@@ -74,19 +75,20 @@ export const createCartBlock = (product: IProduct) => {
   };
 
   const cartBlock = createElement('div', 'product-details__cart');
-
+  const cartBtnText = cartController.isProductInCart(product.title)? 'Drop from cart' : 'Add to cart';
   const price = createElement('p', 'product-details__price');
-  const cartBtn = createButton('product-details-btn', 'Add to cart');
+  const cartBtn = createButton('product-details-btn', cartBtnText);
   const buyBtn = createButton('product-details-btn', 'Buy now');
-  
+
   cartBtn.classList.add('product-details-cart-btn');
   buyBtn.classList.add('product-details-buy-btn');
-  price.textContent = `$${product.price}.00`;
+  price.textContent = `€${product.price}.00`;
 
   cartBlock.appendChild(price);
   cartBlock.appendChild(cartBtn);
   cartBlock.appendChild(buyBtn);
 
+  cartBtn.addEventListener('click', () => cartController.handleAddDropToCart(cartBtn, product.id));
   buyBtn.addEventListener('click', showModal);
 
   return cartBlock;

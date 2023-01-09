@@ -27,7 +27,7 @@ const createHeader = (cartData: ICart) => {
   logo.append(logoTitle);
 
   price.innerText = 'Cart total: ';
-  priceTotal.innerText = `€${cartData.totalSum}`;
+  priceTotal.innerText = `€${cartData.totalSum}.00`;
   price.appendChild(priceTotal);
 
   cartImage.src = cartImg;
@@ -40,7 +40,7 @@ const createHeader = (cartData: ICart) => {
   header.append(price);
   header.append(cart);
 
-  cart.addEventListener('click', (e) => cartController.handleCartClick(e))
+  cart.addEventListener('click', (e: Event) => cartController.handleCartClick(e));
 
   return header;
 }

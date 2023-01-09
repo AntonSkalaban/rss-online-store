@@ -16,9 +16,10 @@ const createProductCard = (
   const productImgContainer = createElement('div', 'product-img-container');
 
 
-  const productBtns = createCardBtns(id);
- 
+  const productBtns = createCardBtns(id, title);
+
   productCard.style.width = isBig ? '23%' : '15%';
+  productCard.style.height = isBig ? 'auto' : '120px';
 
   productImgContainer.style.width = '100%';
   productImgContainer.style.height = isBig ? '250px' : '70px';
@@ -39,7 +40,7 @@ const createProductCard = (
     const productDiscount = createElement('p', 'product-about-item');
     const productRating = createElement('p', 'product-about-item');
     const productStock = createElement('p', 'product-about-item');
-    
+
     productCategory.textContent = `Category: ${category}`;
     productBrand.textContent = `Brand: ${brand}`;
     productPrice.textContent = `Price: $${price}.00`;

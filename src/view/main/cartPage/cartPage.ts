@@ -9,11 +9,21 @@ export class CartPage {
   private cart: ICart;
   private root: HTMLElement;
   private productsInner: HTMLElement;
+  private summarySum: HTMLElement;
+  private summaryNewSum: HTMLElement;
+  private promoAppliedBlock: HTMLElement;
+  private summaryPromoInput: HTMLInputElement;
+  private promoBlock: HTMLElement;
 
   constructor(cartData: ICart) {
     this.cart = cartData;
     this.root = createElement('div', 'cart-page');
     this.productsInner = createElement('div', 'cart-products__inner');
+    this.summarySum = createElement('div', 'cart-summary__sum');
+    this.summaryNewSum = createElement('div', 'cart-summary__sum_new');
+    this.promoAppliedBlock = createElement('div', 'cart-summary__promo-applied');
+    this.summaryPromoInput = <HTMLInputElement>createElement('input', 'cart-summary__promo-input');
+    this.promoBlock = createElement('div', 'cart-summary__promo-block');
   }
 
   private createEmptyCartText(): HTMLElement {
@@ -67,7 +77,7 @@ export class CartPage {
     productDiscount.innerText = `Discount: ${cartProduct.discountPercentage}%`;
     productRaiting.innerText = `Raiting: ${cartProduct.rating}`;
     controlStock.innerText = `Stock: ${cartProduct.stock}`;
-    controlTotalPrice.innerText = `€${cartProduct.price * amount}`;
+    controlTotalPrice.innerText = `€${cartProduct.price * amount}.00`;
     productAmount.innerText = `${amount}`;
 
     productInfo.append(productPrice ,productRaiting, productDiscount)
@@ -96,29 +106,113 @@ export class CartPage {
     const summaryHeaderTitle = createElement('h2', 'cart-summary__header-title');
     const summaryInner = createElement('div', 'cart-summary__inner');
     const summaryAmount = createElement('div', 'cart-summary__amount');
-    const summartAmountValue = <HTMLSpanElement>createElement('span', 'cart-summary__amount-value');
-    const summarySum = createElement('div', 'cart-summary__sum');
-    const summartSumValue = <HTMLSpanElement>createElement('span', 'cart-summary__sum-value');
-    const summartPromoInput = <HTMLInputElement>createElement('input', 'cart-summary__promo-input');
-    const summartPromoText = createElement('div', 'cart-summary__promo-text');
+    const summaryAmountValue = createElement('span', 'cart-summary__amount-value');
+    const summarySumValue = createElement('span', 'cart-summary__sum-value');
+    const summaryPromoCodes = createElement('div', 'cart-summary__promo-codes');
     const summaryButton = createButton('cart-summary__button', 'Buy now');
+    const codes = Object.keys(this.cart.promoCodes).map(code => `'${code.toUpperCase()}'`).join(', ');
 
     summaryHeaderTitle.innerText = 'Summary';
     summaryAmount.innerText = 'Products: '
-    summarySum.innerText = 'Total: '
-    summartAmountValue.innerText = `${totalAmount}`;
-    summartSumValue.innerText = `€${totalSum}`;
-    summartPromoInput.type = 'search';
-    summartPromoInput.placeholder = 'Enter promo code';
-    summartPromoText.innerText = `Promo for test: 'RS', 'EPM'`;
+    this.summarySum.innerText = 'Total: '
+    summaryAmountValue.innerText = `${totalAmount}`;
+    summarySumValue.innerText = `€${totalSum}.00`;
+    this.summaryPromoInput.type = 'search';
+    this.summaryPromoInput.placeholder = 'Enter promo code';
+    summaryPromoCodes.innerText = `Promo for test: ${codes}`;
 
     summaryHeader.append(summaryHeaderTitle);
-    summaryAmount.append(summartAmountValue);
-    summarySum.append(summartSumValue);
-    summaryInner.append(summaryAmount, summarySum, summartPromoInput, summartPromoText, summaryButton);
+    summaryAmount.append(summaryAmountValue);
+    this.summarySum.append(summarySumValue);
+    summaryInner.append(summaryAmount, this.summarySum, this.summaryNewSum,
+      this.promoAppliedBlock, this.summaryPromoInput, this.promoBlock, summaryPromoCodes, summaryButton);
     summary.append(summaryHeader, summaryInner);
 
+    this.summaryPromoInput.addEventListener('input', this.onInputPromo.bind(this));
+
     return summary;
+  }
+
+  private onInputPromo(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const value: string = input.value.toLowerCase();
+    const validCodes: string[] = Object.keys(this.cart.promoCodes);
+
+    this.promoBlock.innerHTML = '';
+    if (validCodes.includes(value)) {
+      this.fillPromoBlock(value);
+    }
+  }
+
+  private fillPromoBlock(code: string): void {
+    const promoText = createElement('span', 'cart-summary__promo-block-text');
+    const promoBtn = createButton('cart-summary__promo-block-btn', 'add');
+
+    const isAppliedCode = this.cart.appliedPromoCodes.includes(code) ? true : false;
+    const discount: number = this.cart.promoCodes[code];
+
+    promoText.innerText = `${code.toUpperCase()} - ${discount}%`;
+    this.promoBlock.append(promoText);
+
+    if (!isAppliedCode) {
+      this.promoBlock.append(promoBtn);
+      promoBtn.addEventListener('click', () => {
+        cartController.handleApplyPromoCode(code);
+        this.fillPromoAppliedBlock();
+        this.updateTotalPrice();
+        this.summaryPromoInput.value = '';
+        this.promoBlock.innerHTML = '';
+      });
+    }
+  }
+
+  private updateTotalPrice(): void {
+    let totalDiscount = 0;
+    for (const code of this.cart.appliedPromoCodes) {
+      totalDiscount += this.cart.promoCodes[code];
+    }
+
+    const currentPrice: number = this.cart.totalSum;
+    const newPrice: number = currentPrice - (currentPrice * totalDiscount / 100)
+
+    if (this.cart.appliedPromoCodes.length) {
+      this.summarySum.style.textDecoration = 'line-through';
+      this.summaryNewSum.innerText = `Total: €${newPrice.toFixed(2)}`;
+    } else {
+      this.summarySum.style.textDecoration = 'none';
+      this.summaryNewSum.innerText = '';
+    }
+  }
+
+  private fillPromoAppliedBlock(): void {
+    this.promoAppliedBlock.innerHTML = '';
+    if (this.cart.appliedPromoCodes.length) {
+      const promoAppliedHeader = createElement('div', 'cart-summary__promo-applied-header');
+      const promoAppliedItems: HTMLElement[] = this.cart.appliedPromoCodes.map(
+        code => this.createPromoAppliedItem(code, this.cart.promoCodes[code]));
+      promoAppliedHeader.innerText = 'Applied codes';
+
+      this.promoAppliedBlock.append(promoAppliedHeader, ...promoAppliedItems)
+    }
+  }
+
+  private createPromoAppliedItem(code: string, discount: number): HTMLElement {
+    const item = createElement('div', 'cart-summary__promo-applied-item');
+    const itemText = createElement('span', 'cart-summary__promo-applied-text');
+    const itemBtn = createButton('cart-summary__promo-applied-btn', 'drop');
+
+    itemText.innerText = `${code.toUpperCase()} - ${discount}%`;
+    item.addEventListener('click', () => {
+      cartController.handleDropPromoCode(code);
+      this.updateTotalPrice();
+      this.fillPromoAppliedBlock();
+      item.remove();
+      this.summaryPromoInput.value = '';
+      this.promoBlock.innerHTML = '';
+    });
+
+    item.append(itemText, itemBtn);
+    return item;
   }
 
   private renderCartProducts(products: ICartProducts) {

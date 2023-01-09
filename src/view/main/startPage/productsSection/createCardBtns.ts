@@ -5,9 +5,11 @@ import { cartController } from "../../../../controller/cartController";
 
 import './cardBtns.scss';
 
-const createCardBtns = (id: number) => {
+const createCardBtns = (id: number, title: string) => {
+  const cartBtnText = cartController.isProductInCart(title)? 'Drop from cart' : 'Add to cart';
+
   const productBtns = createElement('div', 'product-buttons');
-  const cartBtn = createButton('cart-btn', 'Add to cart');
+  const cartBtn = createButton('cart-btn', cartBtnText);
   const detailsBtn = createButton('details-btn', 'Details');
 
   cartBtn.dataset.id = String(id);
@@ -20,8 +22,8 @@ const createCardBtns = (id: number) => {
     router();
   }
 
-  cartBtn.addEventListener('click', () => cartController.handleAddToCart(id))
-  detailsBtn.addEventListener('click', (e) => editHistory(e))
+  cartBtn.addEventListener('click', () => cartController.handleAddDropToCart(cartBtn, id));
+  detailsBtn.addEventListener('click', (e) => editHistory(e));
 
   productBtns.appendChild(cartBtn);
   productBtns.appendChild(detailsBtn);
