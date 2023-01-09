@@ -14,6 +14,8 @@ export class CartPage {
   private promoAppliedBlock: HTMLElement;
   private summaryPromoInput: HTMLInputElement;
   private promoBlock: HTMLElement;
+  private url: URL;
+  private params: Array<string>
 
   constructor(cartData: ICart) {
     this.cart = cartData;
@@ -24,6 +26,8 @@ export class CartPage {
     this.promoAppliedBlock = createElement('div', 'cart-summary__promo-applied');
     this.summaryPromoInput = <HTMLInputElement>createElement('input', 'cart-summary__promo-input');
     this.promoBlock = createElement('div', 'cart-summary__promo-block');
+    this.url = new URL(window.location.href);
+    this.params = this.url.search.substring(1).split('&');
   }
 
   private createEmptyCartText(): HTMLElement {
@@ -36,9 +40,10 @@ export class CartPage {
     const productsSection = createElement('div' ,'cart-products');
 
     productsSection.append(this.createProductSectionHeader(), this.productsInner);
-    this.renderCartProducts(this.cart.products)
+    this.renderCartProducts(this.params)
     return productsSection;
   }
+
 
   private createProductSectionHeader(): HTMLElement  {
     const productsHeader = createElement('div', 'cart-products__header');
@@ -46,6 +51,7 @@ export class CartPage {
 
     productsHeaderTitle.innerText = 'Products In Cart';
     productsHeader.append(productsHeaderTitle);
+    productsHeader.appendChild(this.renerPluginsBlock())
     return productsHeader;
   }
 
@@ -215,14 +221,172 @@ export class CartPage {
     return item;
   }
 
-  private renderCartProducts(products: ICartProducts) {
-    const productsArr: HTMLElement[] = Object.values(products).map((item, index) => {
-      return this.createCartProduct(index, item.product, item.amount);
+  // plugins 
+  private renerPluginsBlock() {
+
+    const url = new URL(window.location.href);
+    const allParams = url.search.substring(1).split('&');
+    
+    const limitParam = allParams.find(el => el.includes('limit='))?.split('=')[1]
+    const pageParam = allParams.find(el => el.includes('page='))?.split('=')[1]
+
+    const block = createElement('div', 'plugins-block');
+    const limit = createElement('div', 'limit-counter')
+    const limitInput = <HTMLInputElement>createElement('input', 'limit-input');
+    limit.textContent = 'LIMIT';
+    limitInput.type = 'number';
+    limitInput.value = limitParam ? limitParam : '3';
+
+    const page = createElement('div', 'page-counter');
+    const lessBtn = createButton('less-btn', '<')
+    const pageNumber = createElement('span', 'page-counter-number');
+    const moreBtn = createButton('more-btn', '>');
+    page.textContent = 'PAGE';
+    pageNumber.textContent = pageParam ? pageParam : '1'
+
+    block.appendChild(limit);
+    block.appendChild(page);
+
+    limit.appendChild(limitInput);
+
+    page.appendChild(lessBtn);
+    page.appendChild(pageNumber)
+    page.appendChild(moreBtn)
+
+    const limitCounter = (e: Event) => {
+      const target = <HTMLInputElement>e.target;
+      const value = +target?.value;
+      
+      const productsArray = Object.values(this.cart.products).map(i => Object.values(i));
+      const productsNumber = productsArray.length;
+
+      if (value > productsNumber) {
+        return target.value = String(productsNumber);
+      } else if (value < 1) {
+        return target.value = '1';
+      }
+      
+      const limitCounterUrl = () => {
+        const url = new URL(window.location.href);
+        let allParams = url.search.substring(1).split('&');
+       
+        if (window.location.href.includes('limit=')) {
+          allParams = allParams.map((params) => {
+            return params.includes('limit')
+              ? `limit=${ value }`
+              : params;
+          });
+    
+        } else {
+          allParams.push(`limit=${ value }`);
+          if (!allParams[0]) allParams.shift();
+        } 
+        this.renderCartProducts(allParams)
+        
+      }
+
+      limitCounterUrl()
+    }
+
+    const pageCounter = (e :Event) => {
+      const target = <HTMLInputElement>e.target;
+      
+      const productsArray = Object.values(this.cart.products).map(i => Object.values(i));
+      const productsNumber = productsArray.length;
+
+      if (!pageNumber.textContent) return;
+      const pageValue = +pageNumber.textContent
+
+      if (target.className.includes('more-btn')) {
+        if (pageValue < productsNumber / +limitInput.value) {
+          pageNumber.textContent = String(pageValue + 1);
+        }
+      } else {
+        pageNumber.textContent = String(pageValue < 2 ? '1' :  pageValue - 1);
+      }
+
+      const pageCounterUrl = () => {
+        const url = new URL(window.location.href);
+        let allParams = url.search.substring(1).split('&');
+       
+        if (window.location.href.includes('page=')) {
+          allParams = allParams.map((params) => {
+            return params.includes('page')
+              ? `page=${ pageNumber.textContent  }`
+              : params;
+          });
+    
+        } else {
+          allParams.push(`page=${ pageNumber.textContent  }`);
+          if (!allParams[0]) allParams.shift();
+        } 
+        this.renderCartProducts(allParams)
+        
+      }
+      pageCounterUrl()
+    }
+
+    limitInput.addEventListener('input', (e) => limitCounter(e));
+    lessBtn.addEventListener('click', (e) => pageCounter(e));
+    moreBtn.addEventListener('click', (e) => pageCounter(e));
+
+    return block;
+  }
+
+  private renderCartProducts(params: Array<string>) {
+
+    const pageCounter = params.find(el => el.includes('page='))?.split('=')[1];
+
+    const productsArr: HTMLElement[] = Object.values(this.cart.products).map((item, index) => {
+      return this.createCartProduct(index + 1, item.product, item.amount);
     });
 
-    this.productsInner.innerHTML = '';
-    this.productsInner.append(...productsArr);
-  }
+    // const spliceIntoChunks = (arr: HTMLElement[], chunkSize: number) : HTMLElement[][]=> {
+    //   const res = [];
+    //   while (arr.length > 0) {
+    //     const chunk = arr.splice(0, chunkSize);
+    //     res.push(chunk);
+    //   }
+    //   return res;
+    // }
+
+  
+//     params.forEach((param) => {
+//       if (param.includes('limit=')) {
+//         productsArr.slice(0, pageCounter !== undefined ? );
+//         // const arr: HTMLElement[][] | HTMLElement= spliceIntoChunks(productsArr,  +param.split('=')[1])
+
+//         // this.productsInner.innerHTML = '';
+   
+//         // if (arr.length > 1) {
+          
+//         //   this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
+//         // } else {
+//         //   // console.log(...arr)
+//         //   // arr.forEach(el => 
+//         //   //   this.productsInner.append(el))
+//         // //  this.productsInner.innerHTML = '';
+//         //  // this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
+//         //  this.productsInner.innerHTML = '';
+//         //  this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
+          
+// //        }
+
+//       } else {
+//         console.log('else')
+//         const arr = spliceIntoChunks(productsArr, 3)
+//         this.productsInner.innerHTML = '';
+//         this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
+//       }
+//     })
+   
+     
+
+//     // this.productsInner.innerHTML = '';
+//     // this.productsInner.append(...productsArr);
+//     const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
+//     window.history.pushState({path:newurl}, '', newurl);
+}
 
   public getRoot() {
     return this.root;
