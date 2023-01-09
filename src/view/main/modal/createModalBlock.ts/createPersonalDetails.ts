@@ -34,13 +34,11 @@ const createPersonalDetails = () => {
   }
 
   const removeNumberError = (e: Event) => {
-    const target = <HTMLInputElement>e.target
+    const target = <HTMLInputElement>e.target;
     const value = target.value.trim();
 
-    if (
-      value[0] !== '+' || isNaN(+value.substring(2, value.length - 1))
-    ) target.value = value.substring(0, value.length - 1);
- 
+    if (!/^\+\d*$/.test(value)) target.value = value.substring(0, value.length - 1);
+
     hideError(value, /^\+\d{9,}/, numberError);
   }
 
@@ -66,10 +64,9 @@ const createPersonalDetails = () => {
   const numberInput = <HTMLInputElement>createElement('input', 'number-input');
   const numberError = createElement('p', 'error');
 
-  const adressRow = createElement('div', 'adress-row');
+  const adressRow = createElement('div', 'modal-row');
   const adressInput = <HTMLInputElement>createElement('input', 'adress-input');
   const adressError = createElement('p', 'error');
-
 
   const emailRow = createElement('div', 'modal-row');
   const emailInput = <HTMLInputElement>createElement('input', 'email-input');
