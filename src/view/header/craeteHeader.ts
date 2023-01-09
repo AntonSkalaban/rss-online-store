@@ -7,7 +7,7 @@ import cartImg from '../../assets/svg/shopping-cart.svg';
 
 import './header.scss';
 
-const createHeader = (cartData: ICart) => {
+const createHeader = (cartData: ICart): HTMLElement => {
   const header = createElement('header', 'header');
 
   const logo = createElement('a', 'header__logo');
