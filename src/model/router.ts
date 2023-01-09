@@ -4,15 +4,17 @@ import createProductDetailsSection from "../view/main/productDetails/createProdu
 import  renderPage  from "../index";
 import data from "./data";
 import { cartModel } from './cartModel';
+import createErrortPage from "../view/main/error-page/createErrorPage";
 
 const url = new URL(window.location.href);
 const allParams = url.search.substring(1).split('&');
-const cartPage = new CartPage(cartModel.getCart());
 
 export const router = () => {
 
   const main  = document.querySelector('.main');
   if (!main) return;
+
+  const cartPage = new CartPage(cartModel.getCart());
 
   main.innerHTML = '';
 
@@ -31,6 +33,11 @@ export const router = () => {
     main.append(cartPage.getRoot())
     cartPage.mount();
 
+  } else if (!path.includes('/cart') && !path.includes('/about') && !path.includes('/?')) {
+
+    const errorPage = createErrortPage();
+    main.append(errorPage);
+    
   } else {
     // history.replaceState('', '', '/');
     // router()
