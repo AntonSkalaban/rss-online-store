@@ -1,9 +1,16 @@
+import { router } from "../../../../model/router";
 import createButton from "../../../helpers/createButton"
 
 const createModalBtn = () => {
   const btn = createButton('modal-btn', 'modal btn');
 
-  btn.addEventListener('click', () => console.log('click'))
+  const editHistory = (path: string) => {
+    console.log(path)
+    history.pushState('', '', path);
+    router();
+  }
+
+  btn.addEventListener('click', () => editHistory('/cart'))
   return btn;
 }
 

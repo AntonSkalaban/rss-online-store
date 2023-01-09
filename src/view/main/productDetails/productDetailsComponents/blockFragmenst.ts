@@ -4,6 +4,7 @@ import createElement from "../../../helpers/createElemt"
 import createBlockWitdthTitle from '../../../helpers/createBlockWithTitle';
 import createButton from '../../../helpers/createButton';
 import createModal from '../../modal/createModal';
+import { router } from '../../../../model/router';
 
 
 export const createProductImgsBlock = (product: IProduct) => {
@@ -68,9 +69,18 @@ export const createProductDataBlock = (product: IProduct) => {
 }
 
 export const createCartBlock = (product: IProduct) => {
-  const showModal = () => {
+
+  const editHistory = (path: string) => {
+    history.pushState('', '', path);
+    router();
+  }
+
+  const buyNow = () => {
+
+    editHistory('/cart');
+    
     const modal = createModal();
-    const main = document.querySelector('.main')
+    const main = document.querySelector('main')
     main?.appendChild(modal);
   };
 
@@ -89,7 +99,7 @@ export const createCartBlock = (product: IProduct) => {
   cartBlock.appendChild(buyBtn);
 
   cartBtn.addEventListener('click', () => cartController.handleAddDropToCart(cartBtn, product.id));
-  buyBtn.addEventListener('click', showModal);
+  buyBtn.addEventListener('click', buyNow);
 
   return cartBlock;
 }

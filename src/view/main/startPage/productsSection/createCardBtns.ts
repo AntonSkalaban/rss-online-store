@@ -16,14 +16,13 @@ const createCardBtns = (id: number, title: string) => {
   detailsBtn.dataset.id = String(id);
   detailsBtn.dataset.href = '/about';
 
-  const editHistory = (e: Event) => {
-    const target = <HTMLElement>e.target
-    history.pushState('', '', target.dataset.href + '/' + target.dataset.id);
+  const editHistory = (path: string) => {
+    history.pushState('', '', path);
     router();
   }
 
   cartBtn.addEventListener('click', () => cartController.handleAddDropToCart(cartBtn, id));
-  detailsBtn.addEventListener('click', (e) => editHistory(e));
+  detailsBtn.addEventListener('click', (e) => editHistory(`about/${(<HTMLElement>e.target)?.dataset.id}`));
 
   productBtns.appendChild(cartBtn);
   productBtns.appendChild(detailsBtn);
