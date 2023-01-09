@@ -29,6 +29,10 @@
   }
 }
 
+.grid-size {
+  cursor: pointer;
+}
+
 .active {
-  color: yellow;
+  color: $color-orange;
 }

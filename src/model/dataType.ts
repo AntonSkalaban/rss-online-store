@@ -23,4 +23,10 @@ export interface ICart {
   products: ICartProducts,
   totalAmount: number,
   totalSum: number,
+  promoCodes: IPromoCodes,
+  appliedPromoCodes: string[];
+}
+
+export interface IPromoCodes {
+  [key: string] : number;
 }

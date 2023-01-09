@@ -8,7 +8,7 @@ class CartController {
   private updateTotalPrise(totalSum: number): void {
     const PRISE = document.querySelector<HTMLElement>('.header__price-total');
     if (PRISE) {
-      PRISE.innerText = `€${totalSum}`;
+      PRISE.innerText = `€${totalSum}.00`;
     }
   }
 
@@ -19,17 +19,17 @@ class CartController {
     }
   }
 
-  private updateSummarylAmount(totalAmount: number): void {
+  private updateSummaryAmount(totalAmount: number): void {
     const SUMMARY_AMOUNT = document.querySelector<HTMLElement>('.cart-summary__amount-value');
     if (SUMMARY_AMOUNT) {
       SUMMARY_AMOUNT.innerText = `${totalAmount}`;
     }
   }
 
-  private updateSummarylSum(totalSum: number): void {
+  private updateSummarySum(totalSum: number): void {
     const SUMMARY_SUM = document.querySelector<HTMLElement>('.cart-summary__sum-value');
     if (SUMMARY_SUM) {
-      SUMMARY_SUM.innerText = `€${totalSum}`;
+      SUMMARY_SUM.innerText = `€${totalSum}.00`;
     }
   }
 
@@ -39,13 +39,22 @@ class CartController {
     CART_PAGE.append(CART_EMTY_TEXT);
   }
 
-  public handleAddToCart(id: number): void {
+  public handleAddDropToCart(BTN: HTMLElement , id: number): void {
     const product: IProduct | undefined = data.find(product => product.id === id);
 
+
     if (product) {
-      const {totalSum, totalAmount} = cartModel.addProduct(product);
-      this.updateTotalPrise(totalSum);
-      this.updateTotalAmount(totalAmount);
+      if(!cartModel.isProductInCart(product.title)) {
+        const {totalSum, totalAmount} = cartModel.addProduct(product);
+        this.updateTotalPrise(totalSum);
+        this.updateTotalAmount(totalAmount);
+        BTN.innerText = 'Drop from cart';
+      } else {
+        const {totalSum, totalAmount} = cartModel.dropProduct(product);
+        this.updateTotalPrise(totalSum);
+        this.updateTotalAmount(totalAmount);
+        BTN.innerText = 'Add to cart';
+      }
     }
   }
 
@@ -59,8 +68,8 @@ class CartController {
     const productAmount: number = products[product.title].amount;
     this.updateTotalPrise(totalSum);
     this.updateTotalAmount(totalAmount);
-    this.updateSummarylAmount(totalAmount);
-    this.updateSummarylSum(totalSum);
+    this.updateSummaryAmount(totalAmount);
+    this.updateSummarySum(totalSum);
     PRODUCT_AMOUNT.innerText = `${productAmount}`;
     PRODUCT_TOTAL_PRICE.innerText = `€${productAmount * product.price}`
   }
@@ -72,8 +81,8 @@ class CartController {
     const productAmount: number = products[product.title].amount;
     this.updateTotalPrise(totalSum);
     this.updateTotalAmount(totalAmount);
-    this.updateSummarylAmount(totalAmount);
-    this.updateSummarylSum(totalSum);
+    this.updateSummaryAmount(totalAmount);
+    this.updateSummarySum(totalSum);
 
     const CART_PAGE = document.querySelector<HTMLElement>('.cart-page');
     const isCartEmty: boolean = cartModel.getCart().totalAmount <= 0;
@@ -97,12 +106,24 @@ class CartController {
     router();
   }
 
+  public handleApplyPromoCode(code: string) {
+    cartModel.applyPromoCode(code);
+  }
+
+  public handleDropPromoCode(code: string) {
+    cartModel.dropPromoCode(code);
+  }
+
   public getLocalCartStorage(): void {
     cartModel.getLocalCartStorage();
   }
 
   public getCart(): ICart {
     return cartModel.getCart();
+  }
+
+  public isProductInCart(title: string): boolean {
+    return cartModel.isProductInCart(title);
   }
 }
 

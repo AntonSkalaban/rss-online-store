@@ -8,6 +8,11 @@ class CartModel {
       products: {},
       totalAmount: 0,
       totalSum: 0,
+      promoCodes: {
+        'epm': 5,
+        'rs': 10,
+      },
+      appliedPromoCodes: [],
     }
 
     this.getLocalCartStorage();
@@ -43,6 +48,17 @@ class CartModel {
     return this.getCart();
   }
 
+  public dropProduct(product: IProduct): ICart {
+    const productAmount = this.cart.products[product.title].amount;
+    const productSum = this.cart.products[product.title].product.price;
+    this.cart.totalAmount -= productAmount;
+    this.cart.totalSum -= productAmount * productSum;
+    this.deleteProduct(product);
+
+    this.setLocalCartStorage(this.getCart());
+    return this.getCart();
+  }
+
   public deleteProduct(product: IProduct): void {
     delete this.cart.products?.[product.title];
     this.setLocalCartStorage(this.getCart());
@@ -64,6 +80,26 @@ class CartModel {
 
     this.setLocalCartStorage(this.getCart());
     return this.getCart();
+  }
+
+  public isProductInCart(title: string): boolean {
+    if (this.cart.products[title]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public applyPromoCode(code: string) {
+    if (!this.cart.appliedPromoCodes.includes(code)) {
+      !this.cart.appliedPromoCodes.push(code);
+    }
+  }
+
+  public dropPromoCode(code: string) {
+    if (this.cart.appliedPromoCodes.includes(code)) {
+      this.cart.appliedPromoCodes = this.cart.appliedPromoCodes.filter(i => i !== code);
+    }
   }
 
   public setLocalCartStorage(cart: ICart): void {

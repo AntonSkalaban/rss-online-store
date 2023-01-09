@@ -7,13 +7,12 @@ import { cartModel } from './cartModel';
 
 const url = new URL(window.location.href);
 const allParams = url.search.substring(1).split('&');
+const cartPage = new CartPage(cartModel.getCart());
 
 export const router = () => {
 
   const main  = document.querySelector('.main');
   if (!main) return;
-
-  const cartPage = new CartPage(cartModel.getCart());
 
   main.innerHTML = '';
 

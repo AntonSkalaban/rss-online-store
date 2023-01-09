@@ -1,6 +1,5 @@
 import createElement from "../../../helpers/createElemt"
 import { IProduct } from "../../../../model/dataType";
-import data from "../../../../model/data";
 
 const createProductDetailsNavigator = (product: IProduct) => {
 
@@ -14,7 +13,7 @@ const createProductDetailsNavigator = (product: IProduct) => {
   const brand = createElement('p');
   const prouctName = createElement('p');
 
-  
+
   store.textContent = 'store';
   category.textContent = `${product.category}`;
   brand.textContent = `${product.brand}`;
