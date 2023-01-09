@@ -1,6 +1,10 @@
 import { checkValid, hideError, checkLength } from "../../../../controller/modal/formHandler";
 import createElement from "../../../helpers/createElemt";
 
+import maestoImg from '../../../../assets/img/maestro.jpg';
+import visaImg from '../../../../assets/img/visa.jpg';
+import masterCardImg from '../../../../assets/img/master-card.jpg';
+import unknownCardImg from '../../../../assets/img/no-logo.jpg';
 
 const createCardlDetails = () => {
 
@@ -10,11 +14,11 @@ const createCardlDetails = () => {
     const firstDigit = value[0];
 
     if (firstDigit === '1') {
-      cardImg.src = ''
+      cardImg.src = maestoImg;
     } else if (firstDigit === '2') {
-      cardImg.src = '';
+      cardImg.src = visaImg;
     } else if (firstDigit === '3') {
-      cardImg.src = '';
+      cardImg.src = masterCardImg;
     }
 
     checkValid(value, /^\d{16}$/, numberError);
@@ -60,7 +64,7 @@ const createCardlDetails = () => {
   const inputCvvHandler = (e: Event) => {
     const target = <HTMLInputElement>e.target;
     const value = target.value.trim();
-    
+
     checkLength(target, value, 3);
     hideError(value, /^\d{3}/ , cvvError)
   }
@@ -87,7 +91,7 @@ const createCardlDetails = () => {
   const cvvInput = <HTMLInputElement>createElement('input', 'card-details__cvv-input');
   const cvvError = createElement('p', 'error');
 
-  cardImg.src = '' //placeholderImg
+  cardImg.src = unknownCardImg;
   numberInput.type = 'number';
   numberInput.placeholder= 'Card number';
   numberError.textContent = 'number error';
@@ -103,7 +107,7 @@ const createCardlDetails = () => {
   cardBlock.appendChild(cardBotttomRow);
 
   /* Не знаю как правильно вложить элементы в topRow из-за
-    блока div(номарноли ли div класть в label?), 
+    блока div(номарноли ли div класть в label?),
     так что создай контейнеры для верхней строки сама.
 
     Нижнюю строку предпологал сделать так:
@@ -127,7 +131,7 @@ const createCardlDetails = () => {
 
   cardBotttomRow.appendChild(cardCvvContainer);
   cardCvvContainer.appendChild(cvvLabel);
-  cardDateContainer.appendChild(cvvError);
+  cardCvvContainer.appendChild(cvvError);
   cvvLabel.textContent = 'CVV:';
   cvvLabel.appendChild(cvvInput);
 
@@ -144,5 +148,3 @@ const createCardlDetails = () => {
 }
 
 export default createCardlDetails;
-
-

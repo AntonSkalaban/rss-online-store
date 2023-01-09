@@ -3,6 +3,8 @@ import createCardlDetails from "./createModalBlock.ts/createCardDetails";
 import createModalBtn from "./createModalBlock.ts/createModalBtn";
 import createPersonalDetails from "./createModalBlock.ts/createPersonalDetails";
 
+import './modal.scss';
+
 const createModal = () => {
   const modal = createElement('div', 'modal');
 
@@ -13,7 +15,7 @@ const createModal = () => {
   const modalBtn = createModalBtn();
 
   cardTitle.textContent = 'Credit card details';
-  productPersonalDetailsTitle.textContent = 'Product details';
+  productPersonalDetailsTitle.textContent = 'Personal details';
 
   modal.appendChild(productPersonalDetailsTitle);
   modal.appendChild(productPersonalDetails);
