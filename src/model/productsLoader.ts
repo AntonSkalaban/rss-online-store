@@ -21,7 +21,9 @@ const renderFilterdItems = (
 }
 
 const renderFilteredSlider = (
-  data: Array<IProduct>, key: keyof IProduct, lowSlider: string, upSlider: string, lowVal: string, upVal: string
+  data: Array<IProduct>,
+  params: Array<string>,
+  key: keyof IProduct, lowSlider: string, upSlider: string, lowVal: string, upVal: string
 ) => {
   const lowerSlider = document.querySelector<HTMLInputElement>(lowSlider);
   const upperSlider = document.querySelector<HTMLInputElement>(upSlider);
@@ -29,7 +31,17 @@ const renderFilteredSlider = (
   const upperVal = document.querySelector<HTMLInputElement>(upVal);
   if (!lowerSlider || !upperSlider || !lowerVal || !upperVal) return;
 
-  const arr = data.map((product) => +product[key])
+
+  let arr = [];
+  const param = params.find(el => el.includes(`=${ key }`));
+
+  if (param) {
+    arr = param.split('=')[1].split('%E2%86%95').map((el) => +el);
+
+  } else {
+    arr = data.map((product) => +product[key]);
+  }
+
   const maxVal = Math.max(...arr);
   const minVal = Math.min(...arr);
 
@@ -87,10 +99,10 @@ const renderProducts = (data: Array<IProduct>, params: Array<string>) => {
   renderFilterdItems(data, 'category', '.category__avalible-items');
   renderFilterdItems(data, 'brand', '.brand__avalible-items');
   renderFilteredSlider(
-    data, 'price', '.lower-price-slider', '.upper-price-slider', '.lower-price-value', '.upper-price-value'
+    data, params, 'price', '.lower-price-slider', '.upper-price-slider', '.lower-price-value', '.upper-price-value'
   );
   renderFilteredSlider(
-    data, 'stock', '.lower-stock-slider', '.upper-stock-slider', '.lower-stock-value', '.upper-stock-value'
+    data, params, 'stock', '.lower-stock-slider', '.upper-stock-slider', '.lower-stock-value', '.upper-stock-value'
   );
   showActiveSize(params);
   renderProductsCards(data);

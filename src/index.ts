@@ -30,16 +30,6 @@ const renderPage = (params: Array<string>) => {
       renderSearchValue(value)
     }
 
-    if (param.includes('category=')) {
-      newData = filrerData(newData, param, 'category');
-      renderFilterValue(param, 'category', '.category__checkbox');
-    }
-
-    if (param.includes('brand=')) {
-      newData = filrerData(newData, param, 'brand');
-      renderFilterValue(param, 'brand', '.brand__checkbox');
-    }
-
     if (param.includes('price=')) {
       const [ minPrice, maxPrice ] = param.split('=')[1].split('%E2%86%95');
       newData = filrerSlider(newData, 'price', minPrice, maxPrice);
@@ -48,6 +38,16 @@ const renderPage = (params: Array<string>) => {
     if (param.includes('stock=')) {
       const [ minStock, maxStock ] = param.split('=')[1].split('%E2%86%95');
       newData = filrerSlider(newData, 'stock', minStock, maxStock);
+    }
+
+    if (param.includes('category=')) {
+      newData = filrerData(newData, param, 'category');
+      renderFilterValue(param, 'category', '.category__checkbox');
+    }
+
+    if (param.includes('brand=')) {
+      newData = filrerData(newData, param, 'brand');
+      renderFilterValue(param, 'brand', '.brand__checkbox');
     }
   })
   
