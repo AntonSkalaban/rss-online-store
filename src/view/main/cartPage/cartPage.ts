@@ -341,51 +341,25 @@ export class CartPage {
       return this.createCartProduct(index + 1, item.product, item.amount);
     });
 
-    // const spliceIntoChunks = (arr: HTMLElement[], chunkSize: number) : HTMLElement[][]=> {
-    //   const res = [];
-    //   while (arr.length > 0) {
-    //     const chunk = arr.splice(0, chunkSize);
-    //     res.push(chunk);
-    //   }
-    //   return res;
-    // }
+    params.forEach((param) => {
 
-  
-//     params.forEach((param) => {
-//       if (param.includes('limit=')) {
-//         productsArr.slice(0, pageCounter !== undefined ? );
-//         // const arr: HTMLElement[][] | HTMLElement= spliceIntoChunks(productsArr,  +param.split('=')[1])
-
-//         // this.productsInner.innerHTML = '';
-   
-//         // if (arr.length > 1) {
-          
-//         //   this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
-//         // } else {
-//         //   // console.log(...arr)
-//         //   // arr.forEach(el => 
-//         //   //   this.productsInner.append(el))
-//         // //  this.productsInner.innerHTML = '';
-//         //  // this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
-//         //  this.productsInner.innerHTML = '';
-//         //  this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
-          
-// //        }
-
-//       } else {
-//         console.log('else')
-//         const arr = spliceIntoChunks(productsArr, 3)
-//         this.productsInner.innerHTML = '';
-//         this.productsInner.append(...arr[(pageCounter ? +pageCounter : 1) - 1] );
-//       }
-//     })
-   
+      if (param.includes('limit=')) {
+        const limit = +param.split('=')[1];
      
+        const arr = productsArr.slice( (!pageCounter ? 1 * limit : +pageCounter * limit) - limit , !pageCounter ? 1 * limit : +pageCounter * limit);
+        this.productsInner.innerHTML = '';
+        this.productsInner.append(...arr)
+      } else {
 
-//     // this.productsInner.innerHTML = '';
-//     // this.productsInner.append(...productsArr);
-//     const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
-//     window.history.pushState({path:newurl}, '', newurl);
+        const arr = productsArr.slice( (!pageCounter ? 1 * 3 : +pageCounter * 3) - 3 , !pageCounter ? 1 * 3 : +pageCounter * 3);
+        this.productsInner.innerHTML = '';
+        this.productsInner.append(...arr)
+      }
+
+    const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
+    window.history.pushState({path:newurl}, '', newurl)
+    })
+
 }
 
   public getRoot() {
