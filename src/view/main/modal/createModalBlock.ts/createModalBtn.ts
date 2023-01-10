@@ -2,15 +2,26 @@ import { router } from "../../../../model/router";
 import createButton from "../../../helpers/createButton"
 
 const createModalBtn = () => {
-  const btn = createButton('modal-btn', 'modal btn');
+  const btn = createButton('modal-btn', 'Close');
 
-  const editHistory = (path: string) => {
-    console.log(path)
-    history.pushState('', '', path);
-    router();
+    const closeModal = () => {
+      console.log('asfasf')
+      const editHistory = (path:string) => {  
+        history.pushState('', '', path);
+        router();
+      }
+
+    const errors = Array.from(document.querySelectorAll<HTMLElement>('.error'));
+    console.log(errors)
+
+    if (errors.every((error) => getComputedStyle(error).display == 'none')) {
+      setTimeout(() => editHistory('/cart'), 3000)
+    }
   }
 
-  btn.addEventListener('click', () => editHistory('/cart'))
+
+
+  btn.addEventListener('click', closeModal)
   return btn;
 }
 
