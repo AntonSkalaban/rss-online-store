@@ -301,7 +301,7 @@ export class CartPage {
         pageNumber.textContent = String(pageValue < 2 ? '1' :  pageValue - 1);
       }
 
-      const allParams = pageCounterUrl(e);
+      const allParams = pageCounterUrl();
       this.renderCartProducts(allParams)
     
     }

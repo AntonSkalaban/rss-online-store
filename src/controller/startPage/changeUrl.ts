@@ -54,11 +54,11 @@ export const getSearchedUrl = (e: Event) => {
   return allParams;
 }
 
-export const pageCounterUrl = (e: Event) => {
+export const pageCounterUrl = () => {
   let allParams = getAllParams()
 
-  const target = <HTMLElement>e.target;
-  const value = target.textContent;
+  const target = document.querySelector('.page-counter-number')
+  const value = target?.textContent;
  
   if (value) {
     if (window.location.href.includes('page=')) {
