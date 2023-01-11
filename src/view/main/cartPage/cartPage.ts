@@ -5,7 +5,8 @@ import createButton from '../../helpers/createButton';
 
 import './cartPage.scss';
 import createModal from '../modal/createModal';
-import { router } from '../../../model/router';
+import editHistory from '../../../model/editHistory';
+import { getUrlWithOneParam } from '../../../controller/startPage/changeUrl';
 
 export class CartPage {
   private cart: ICart;
@@ -139,10 +140,6 @@ export class CartPage {
 
     const buyNow = () => {
 
-     const editHistory = (path: string) => {
-      history.pushState('', '', path);
-      router();
-}
       editHistory('/cart');
   
       const modal = createModal();
@@ -281,27 +278,10 @@ export class CartPage {
       } else if (value < 1) {
         return target.value = '1';
       }
-      
-      const limitCounterUrl = () => {
-        const url = new URL(window.location.href);
-        let allParams = url.search.substring(1).split('&');
-       
-        if (window.location.href.includes('limit=')) {
-          allParams = allParams.map((params) => {
-            return params.includes('limit')
-              ? `limit=${ value }`
-              : params;
-          });
-    
-        } else {
-          allParams.push(`limit=${ value }`);
-          if (!allParams[0]) allParams.shift();
-        } 
-        this.renderCartProducts(allParams)
-        
-      }
-
-      limitCounterUrl()
+  
+      const allParams = getUrlWithOneParam(e, 'limit')
+  
+      this.renderCartProducts(allParams)
     }
 
     const pageCounter = (e :Event) => {
@@ -349,37 +329,32 @@ export class CartPage {
   }
 
   private renderCartProducts(params: Array<string>) {
-
     const pageCounter = params.find(el => el.includes('page='))?.split('=')[1];
 
     const productsArr: HTMLElement[] = Object.values(this.cart.products).map((item, index) => {
       return this.createCartProduct(index + 1, item.product, item.amount);
     });
 
-    params.forEach((param) => {
-      if (param.includes('limit=')) {
-        const limit = +param.split('=')[1];
-        const arr = productsArr.slice(
-          (!pageCounter ? 1 * limit : +pageCounter * limit) - limit , !pageCounter ? 1 * limit : +pageCounter * limit
-        );
-        this.productsInner.innerHTML = '';
-        this.productsInner.append(...arr)
-        console.log(arr)
-      } else {
-         const arr = productsArr.slice(
-          (!pageCounter ? 1 * 3 : +pageCounter * 3) - 3 , !pageCounter ? 1 * 3 : +pageCounter * 3
-        );
-        console.log(arr)
-        this.productsInner.innerHTML = '';
-        this.productsInner.append(...arr)
-      }
+    let arr = [...productsArr];
 
-      // this.productsInner.innerHTML = '';
-      // this.productsInner.append(...productsArr)
+    const param = params.find((param) => param.includes('limit='));
 
-      const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
-      window.history.pushState({path:newurl}, '', newurl)
-    })
+    if (param) {
+      const limit = +param.split('=')[1];
+      arr = productsArr.slice(
+        (!pageCounter ? 1 * limit : +pageCounter * limit) - limit , !pageCounter ? 1 * limit : +pageCounter * limit
+      );
+    } else {
+      arr = productsArr.slice(
+        (!pageCounter ? 1 * 3 : +pageCounter * 3) - 3 , !pageCounter ? 1 * 3 : +pageCounter * 3
+      );
+    }
+
+    this.productsInner.innerHTML = '';
+    this.productsInner.append(...arr)
+
+    const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
+    window.history.pushState({path:newurl}, '', newurl)
 
   }
 

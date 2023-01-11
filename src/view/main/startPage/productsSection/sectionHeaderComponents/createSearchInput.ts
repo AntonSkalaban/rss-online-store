@@ -1,11 +1,11 @@
 import renderPage from "../../../../..";
-import { getSearchedUrl } from "../../../../../controller/startPage/changeUrl";
+import { getUrlWithOneParam } from "../../../../../controller/startPage/changeUrl";
 import createElement from "../../../../helpers/createElemt";
 
 const createSearchInput = () => {
   
   const getSearchedPage = (e: Event) => {
-    const allParams = getSearchedUrl(e);
+    const allParams = getUrlWithOneParam(e, 'search');
     renderPage(allParams)
   }
 

@@ -10,11 +10,8 @@ const url = new URL(window.location.href);
 const allParams = url.search.substring(1).split('&');
 
 export const router = () => {
-
   const main  = document.querySelector('.main');
   if (!main) return;
-
-  const cartPage = new CartPage(cartModel.getCart());
 
   main.innerHTML = '';
 
@@ -30,20 +27,16 @@ export const router = () => {
     if (productDetails) main.appendChild(productDetails);
 
   } else if (path.includes('/cart')) {
+    const cartPage = new CartPage(cartModel.getCart());
     main.append(cartPage.getRoot())
     cartPage.mount();
 
-  } else if (!path.includes('/cart') && !path.includes('/about') && !path.includes('/?')) {
-
+  } else {
     const errorPage = createErrortPage();
     main.append(errorPage);
-    
-  } else {
-    // history.replaceState('', '', '/');
-    // router()
   }
-
 }
+
 // Update router
 window.addEventListener('popstate', router);
 window.addEventListener("DOMContentLoaded", router);

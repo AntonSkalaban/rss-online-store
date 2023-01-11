@@ -19,9 +19,8 @@ const createFilterBtnsBlock = () => {
   const copyUrl = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      console.log('Content copied to clipboard');
     } catch (err) {
-      console.error('Failed to copy: ', err);
+      return;
     }
   }
   resetBtn.addEventListener('click', resetUrl);

@@ -5,6 +5,7 @@ import createBlockWitdthTitle from '../../../helpers/createBlockWithTitle';
 import createButton from '../../../helpers/createButton';
 import createModal from '../../modal/createModal';
 import { router } from '../../../../model/router';
+import editHistory from '../../../../model/editHistory';
 
 
 export const createProductImgsBlock = (product: IProduct) => {
@@ -69,11 +70,6 @@ export const createProductDataBlock = (product: IProduct) => {
 }
 
 export const createCartBlock = (product: IProduct) => {
-
-  const editHistory = (path: string) => {
-    history.pushState('', '', path);
-    router();
-  }
 
   const buyNow = () => {
 

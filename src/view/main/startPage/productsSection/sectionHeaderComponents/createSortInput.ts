@@ -1,10 +1,10 @@
 import createElement from "../../../../helpers/createElemt";
-import { getSortedUrl } from "../../../../../controller/startPage/changeUrl";
+import { getUrlWithOneParam } from "../../../../../controller/startPage/changeUrl";
 import renderPage from "../../../../..";
 
 const createSortInput =  () => {
   const getSortedPage = (e: Event) => {
-    const allParams = getSortedUrl(e);
+    const allParams = getUrlWithOneParam(e, 'sort');
     renderPage(allParams);
   };
 
