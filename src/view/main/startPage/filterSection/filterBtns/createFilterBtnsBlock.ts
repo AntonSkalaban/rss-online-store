@@ -18,6 +18,8 @@ const createFilterBtnsBlock = () => {
 
   const copyUrl = async () => {
     try {
+      copyBtn.textContent = 'Copied';
+      setTimeout(() => copyBtn.textContent = 'Copy link', 1500)
       await navigator.clipboard.writeText(window.location.href);
     } catch (err) {
       return;
