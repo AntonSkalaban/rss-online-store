@@ -37,6 +37,40 @@ export const getUrlWithOneParam =(e: Event, key: string) => {
   return allParams;
 }
 
+export const getSearchedUrl = (e: Event) => {
+  let allParams = getAllParams();
+  const value = getValue(e);
+  
+  if (window.location.href.includes('search=')) {
+    if (value) {
+      allParams = replaceQueryParam(allParams, value, 'search');
+    } else {
+      allParams = allParams.filter((params) => !params.includes('search'));
+    }
+
+  } else {
+    allParams = addQueryParam(allParams, value, 'search');
+  } 
+  return allParams;
+}
+
+export const pageCounterUrl = (e: Event) => {
+  let allParams = getAllParams()
+
+  const target = <HTMLElement>e.target;
+  const value = target.textContent;
+ 
+  if (value) {
+    if (window.location.href.includes('page=')) {
+      allParams = replaceQueryParam(allParams, value, 'page');
+
+    } else {
+      allParams = addQueryParam(allParams, value, 'page');
+    }
+  }
+  return allParams;
+}
+    
 export const getGridUrl = (e: Event) => {
   let allParams = getAllParams();
 
@@ -77,6 +111,7 @@ export const getFilteredUrl = (e: Event, key: string) => {
 
     if (categoryes && categoryes.length > 1) {
       allParams = replaceQueryParam(allParams, `${ categoryes.filter((brand) => brand !== value ).join('↕') }`, key);
+
     } else {
       allParams = allParams.filter((param) => !param.includes(key));
     }

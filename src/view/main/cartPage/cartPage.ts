@@ -6,7 +6,7 @@ import createButton from '../../helpers/createButton';
 import './cartPage.scss';
 import createModal from '../modal/createModal';
 import editHistory from '../../../model/editHistory';
-import { getUrlWithOneParam } from '../../../controller/startPage/changeUrl';
+import { getUrlWithOneParam, pageCounterUrl } from '../../../controller/startPage/changeUrl';
 
 export class CartPage {
   private cart: ICart;
@@ -301,24 +301,9 @@ export class CartPage {
         pageNumber.textContent = String(pageValue < 2 ? '1' :  pageValue - 1);
       }
 
-      const pageCounterUrl = () => {
-        const url = new URL(window.location.href);
-        let allParams = url.search.substring(1).split('&');
-       
-        if (window.location.href.includes('page=')) {
-          allParams = allParams.map((params) => {
-            return params.includes('page')
-              ? `page=${ pageNumber.textContent  }`
-              : params;
-          });
+      const allParams = pageCounterUrl(e);
+      this.renderCartProducts(allParams)
     
-        } else {
-          allParams.push(`page=${ pageNumber.textContent  }`);
-          if (!allParams[0]) allParams.shift();
-        } 
-        this.renderCartProducts(allParams)
-      }
-      pageCounterUrl()
     }
 
     limitInput.addEventListener('input', (e) => limitCounter(e));
@@ -351,7 +336,7 @@ export class CartPage {
     }
 
     this.productsInner.innerHTML = '';
-    this.productsInner.append(...arr)
+    this.productsInner.append(...arr);
 
     const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
     window.history.pushState({path:newurl}, '', newurl)
