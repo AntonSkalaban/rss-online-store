@@ -11,7 +11,7 @@ const createFilterBtnsBlock = () => {
   btnConteiner.appendChild(copyBtn);
 
   const resetUrl = () => {
-    document.querySelectorAll<HTMLInputElement>('.category__checkbox').forEach((el) => el.checked =false);
+    document.querySelectorAll<HTMLInputElement>('.category__checkbox').forEach((el) => el.checked = false);
     document.querySelectorAll<HTMLInputElement>('.brand__checkbox').forEach((el) => el.checked = false);
     renderPage(['']);
   }
