@@ -1,9 +1,11 @@
 import { getGridUrl } from './../../../../../controller/startPage/changeUrl';
 import createElement from '../../../../helpers/createElemt'
+import renderPage from '../../../../..';
 
 const createProducstViewContainerts = () => {
-  const getNewUrl = (e: Event) => {
-    getGridUrl(e);
+  const renderPagesGrid = (e: Event) => {
+    const allParams = getGridUrl(e);
+    renderPage(allParams);
   }
 
   const cardsViews = createElement('div', 'cards-views-container');
@@ -15,8 +17,8 @@ const createProducstViewContainerts = () => {
   bigGrid.dataset.size = 'big';
   smallGrid.dataset.size = 'small';
 
-  bigGrid.addEventListener('click', getNewUrl );
-  smallGrid.addEventListener('click', getNewUrl );
+  bigGrid.addEventListener('click', renderPagesGrid );
+  smallGrid.addEventListener('click', renderPagesGrid );
 
   cardsViews.appendChild(bigGrid);
   cardsViews.appendChild(smallGrid);

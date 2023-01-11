@@ -1,5 +1,3 @@
-import renderPage from "../..";
-
 export const getGridUrl = (e: Event) => {
   const url = new URL(window.location.href);
   let allParams = url.search.substring(1).split('&');
@@ -19,7 +17,7 @@ export const getGridUrl = (e: Event) => {
     if (!allParams[0]) allParams.shift();
   }
 
-  renderPage(allParams);
+  return allParams;
 }
 
 export const getSortedUrl = (e: Event) => {
@@ -38,11 +36,10 @@ export const getSortedUrl = (e: Event) => {
 
   } else {
     allParams.push(`sort=${ optionValue }`);
-
     if (!allParams[0]) allParams.shift();
   }
 
-  renderPage(allParams)
+  return allParams;
 };
 
 export  const getSearchedUrl = (e: Event) => {
@@ -67,8 +64,8 @@ export  const getSearchedUrl = (e: Event) => {
     allParams.push(`search=${ value }`);
     if (!allParams[0]) allParams.shift();
   }
-        
-  renderPage(allParams)
+
+  return allParams;
 }
 
 export const getFilteredUrl = (e: Event, key: string) => {
@@ -78,7 +75,7 @@ export const getFilteredUrl = (e: Event, key: string) => {
 
   const url = new URL(window.location.href);
   let allParams = url.search.substring(1).split('&');
-
+  console.log(allParams)
   if (isChecked) {
     if (window.location.href.includes(key)) {
       allParams = allParams.map((param) => {
@@ -104,8 +101,8 @@ export const getFilteredUrl = (e: Event, key: string) => {
       allParams = allParams.filter((param) => !param.includes(key));
     }
   }
-
-  renderPage(allParams);
+console.log(allParams)
+  return allParams;
 }
 
 export const getSliderUrl = (key: string) => {
@@ -115,22 +112,21 @@ export const getSliderUrl = (key: string) => {
   const lowerSlider = document.querySelector<HTMLInputElement>(`.lower-${ key }-slider`);
   const upperSlider = document.querySelector<HTMLInputElement>(`.upper-${ key }-slider`);
 
-  if (!lowerSlider || !upperSlider) return;
+  if (lowerSlider  && upperSlider) {
+    const minVal = Math.min(+lowerSlider.value, +upperSlider.value);
+    const maxVal = Math.max(+lowerSlider.value, +upperSlider.value);
 
-  const minVal = Math.min(+lowerSlider.value, +upperSlider.value);
-  const maxVal = Math.max(+lowerSlider.value, +upperSlider.value);
+    if (window.location.href.includes(key)) {
+      allParams = allParams.map((params) => {
+        return params.includes(key) 
+          ? `${ key }=${ minVal }%E2%86%95${ maxVal }`
+          : params;
+      });
 
-  if (window.location.href.includes(key)) {
-    allParams = allParams.map((params) => {
-      return params.includes(key) 
-        ? `${ key }=${ minVal }%E2%86%95${ maxVal }`
-        : params;
-    });
-
-  } else {
-    allParams.push(`${ key }=${ minVal }%E2%86%95${ maxVal }`);
-    if (!allParams[0]) allParams.shift();
+    } else {
+      allParams.push(`${ key }=${ minVal }%E2%86%95${ maxVal }`);
+      if (!allParams[0]) allParams.shift();
+    }
   }
-
-  renderPage(allParams);
+  return allParams;
 }

@@ -138,6 +138,7 @@ export class CartPage {
 
 
     const buyNow = () => {
+
      const editHistory = (path: string) => {
       history.pushState('', '', path);
       router();
@@ -237,7 +238,6 @@ export class CartPage {
     return item;
   }
 
-  // plugins 
   private renerPluginsBlock() {
 
     const url = new URL(window.location.href);
@@ -337,7 +337,6 @@ export class CartPage {
           if (!allParams[0]) allParams.shift();
         } 
         this.renderCartProducts(allParams)
-        
       }
       pageCounterUrl()
     }
@@ -358,25 +357,31 @@ export class CartPage {
     });
 
     params.forEach((param) => {
-
       if (param.includes('limit=')) {
         const limit = +param.split('=')[1];
-     
-        const arr = productsArr.slice( (!pageCounter ? 1 * limit : +pageCounter * limit) - limit , !pageCounter ? 1 * limit : +pageCounter * limit);
+        const arr = productsArr.slice(
+          (!pageCounter ? 1 * limit : +pageCounter * limit) - limit , !pageCounter ? 1 * limit : +pageCounter * limit
+        );
         this.productsInner.innerHTML = '';
         this.productsInner.append(...arr)
+        console.log(arr)
       } else {
-
-        const arr = productsArr.slice( (!pageCounter ? 1 * 3 : +pageCounter * 3) - 3 , !pageCounter ? 1 * 3 : +pageCounter * 3);
+         const arr = productsArr.slice(
+          (!pageCounter ? 1 * 3 : +pageCounter * 3) - 3 , !pageCounter ? 1 * 3 : +pageCounter * 3
+        );
+        console.log(arr)
         this.productsInner.innerHTML = '';
         this.productsInner.append(...arr)
       }
 
-    const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
-    window.history.pushState({path:newurl}, '', newurl)
+      // this.productsInner.innerHTML = '';
+      // this.productsInner.append(...productsArr)
+
+      const newurl = this.url.origin + '/cart' + ((params[0]) ? '?' + params.join('&') : '');
+      window.history.pushState({path:newurl}, '', newurl)
     })
 
-}
+  }
 
   public getRoot() {
     return this.root;

@@ -4,8 +4,10 @@ import { IProduct } from "../../../../../model/dataType";
 import "../filterBlocks/filterBlock.scss"
 import "./rangeBlock.scss"
 import { getSliderUrl } from "../../../../../controller/startPage/changeUrl";
+import renderPage from "../../../../..";
 
 const createSliderBlock = (data: Array<IProduct>, key: keyof IProduct) => {
+
   const sliderHandler = (e:Event) => {
     const target = <HTMLInputElement>e.target;
     const value = target.value;
@@ -16,7 +18,8 @@ const createSliderBlock = (data: Array<IProduct>, key: keyof IProduct) => {
     const newValue = String(rangeValues[differenseNumbers.indexOf(minDifferense)]);
     target.value = newValue;
 
-    getSliderUrl(key);
+    const allParams = getSliderUrl(key);
+    renderPage(allParams);
   };
 
   const rangeValues = data

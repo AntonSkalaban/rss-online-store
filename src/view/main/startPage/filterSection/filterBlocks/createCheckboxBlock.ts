@@ -2,12 +2,14 @@ import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import { getFilteredUrl } from "../../../../../controller/startPage/changeUrl";
-
 import '../filterBlocks/filterBlock.scss';
+import renderPage from "../../../../..";
 
 const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
-  const getNewUrl = (e: Event) => {
-    getFilteredUrl(e, key);
+  
+  const getfilteredPage = (e: Event) => {
+    const allParams = getFilteredUrl(e, key);
+    renderPage(allParams)
   }
 
   const [categoryBlock, categoryMain ] = createBlockWitdthTitle(
@@ -46,7 +48,7 @@ const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
       label.innerHTML += props;
       listItem.appendChild(itemsCounter);
 
-      label.addEventListener('change', getNewUrl);
+      label.addEventListener('change', getfilteredPage);
     })
 
   categoryMain.appendChild(list);

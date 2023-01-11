@@ -1,9 +1,11 @@
 import createElement from "../../../../helpers/createElemt";
 import { getSortedUrl } from "../../../../../controller/startPage/changeUrl";
+import renderPage from "../../../../..";
 
 const createSortInput =  () => {
-  const getNewUrl = (e: Event) => {
-    getSortedUrl(e)
+  const getSortedPage = (e: Event) => {
+    const allParams = getSortedUrl(e);
+    renderPage(allParams);
   };
 
   const sortInput = <HTMLSelectElement>createElement('select', 'sort-input');
@@ -44,7 +46,7 @@ const createSortInput =  () => {
   sortInput.add(sotrByDiscountASC);
   sortInput.add(sotrByDiscountDESC); 
 
-  sortInput.addEventListener('change', getNewUrl);
+  sortInput.addEventListener('change', getSortedPage);
 
   return sortInput;
 }

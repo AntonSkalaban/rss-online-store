@@ -4,12 +4,12 @@ import createButton from "../../../helpers/createButton"
 const createModalBtn = () => {
   const btn = createButton('modal-btn', 'Buy');
 
-    const closeModal = () => {
+  const closeModal = () => {
      
-      const editHistory = (path:string) => {  
-        history.pushState('', '', path);
-        router();
-      }
+    const editHistory = (path:string) => {  
+      history.pushState('', '', path);
+      router();
+    }
 
     const errors = Array.from(document.querySelectorAll<HTMLElement>('.error'));
 
