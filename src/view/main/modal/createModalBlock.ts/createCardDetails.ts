@@ -27,7 +27,7 @@ const createCardlDetails = () => {
   const checkDateValid = (e: Event) => {
     const value = (<HTMLInputElement>e.target)?.value.trim();
 
-    checkValid(value, /^\d{1}[0-2]{1}\/\d{2}$/, dateError);
+    checkValid(value, /^(0[1-9]|1[0-2])\/?([0-9]{2})$/, dateError);
   }
 
   const checkCvvValid = (e: Event) => {
@@ -58,7 +58,7 @@ const createCardlDetails = () => {
     ) target.value += '/';
 
     checkLength(target, value, 5);
-    hideError(value, /^\d{1}[0-2]{1}\/\d{2}$/ , dateError)
+    hideError(value, /^\d{1}[0-2]{1}\/\d{2}$/, dateError)
   }
 
   const inputCvvHandler = (e: Event) => {

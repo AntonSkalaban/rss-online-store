@@ -87,6 +87,7 @@ class CartModel {
     this.cart.totalAmount = 0;
     this.cart.totalSum = 0;
 
+    this.setLocalCartStorage(this.getCart());
     return this.getCart();
   }
 

@@ -104,6 +104,8 @@ export class CartPage {
     productBtnMinus.addEventListener('click', () => {
       const currentAmount: number = this.cart.products[cartProduct.title].amount;
       cartController.handleDecreaseProduct(product ,productAmount, controlTotalPrice ,cartProduct, currentAmount);
+      const allParams = pageCounterUrl();
+      this.renderCartProducts(allParams)
     });
 
     return product;
@@ -141,7 +143,7 @@ export class CartPage {
     const buyNow = () => {
 
       editHistory('/cart');
-  
+
       const modal = createModal();
       const main = document.querySelector('main')
       main?.appendChild(modal);
@@ -239,7 +241,7 @@ export class CartPage {
 
     const url = new URL(window.location.href);
     const allParams = url.search.substring(1).split('&');
-    
+
     const limitParam = allParams.find(el => el.includes('limit='))?.split('=')[1]
     const pageParam = allParams.find(el => el.includes('page='))?.split('=')[1]
 
@@ -269,7 +271,7 @@ export class CartPage {
     const limitCounter = (e: Event) => {
       const target = <HTMLInputElement>e.target;
       const value = +target?.value;
-      
+
       const productsArray = Object.values(this.cart.products).map(i => Object.values(i));
       const productsNumber = productsArray.length;
 
@@ -278,15 +280,15 @@ export class CartPage {
       } else if (value < 1) {
         return target.value = '1';
       }
-  
+
       const allParams = getUrlWithOneParam(e, 'limit')
-  
+
       this.renderCartProducts(allParams)
     }
 
     const pageCounter = (e :Event) => {
       const target = <HTMLInputElement>e.target;
-      
+
       const productsArray = Object.values(this.cart.products).map(i => Object.values(i));
       const productsNumber = productsArray.length;
 
@@ -303,7 +305,7 @@ export class CartPage {
 
       const allParams = pageCounterUrl();
       this.renderCartProducts(allParams)
-    
+
     }
 
     limitInput.addEventListener('input', (e) => limitCounter(e));
