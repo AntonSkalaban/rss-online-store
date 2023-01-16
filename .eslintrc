@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": [
     //"airbnb-typescript/base",
@@ -10,7 +11,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "online-store/tsconfig.json"
   },
   "plugins": [
     "@typescript-eslint"
@@ -22,6 +23,7 @@
     "indent": ["warn", 2, {
       "SwitchCase": 1
     }],
+    "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/indent": ["warn", 2, {
       "SwitchCase": 1
     }],

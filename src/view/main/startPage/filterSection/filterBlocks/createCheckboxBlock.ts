@@ -2,8 +2,8 @@ import createElement from "../../../../helpers/createElemt";
 import createBlockWitdthTitle from "../../../../helpers/createBlockWithTitle";
 import { IProduct } from "../../../../../model/dataType";
 import { getFilteredUrl } from "../../../../../controller/startPage/changeUrl";
-import '../filterBlocks/filterBlock.scss';
 import renderPage from "../../../../..";
+import '../filterBlocks/filterBlock.scss';
 
 const createCheckboxBlock = (data: Array<IProduct>, key: keyof IProduct) => {
   
