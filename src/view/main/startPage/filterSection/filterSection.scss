@@ -1,0 +1,17 @@
+.filter-section {
+  flex-basis: 23.5%;
+  border: 1px solid $color-dark-beige;
+  border-radius: 10px;
+  background-color: rgb($color-brown, 0.3);
+  padding: 15px;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px
+}
+
+.filter-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

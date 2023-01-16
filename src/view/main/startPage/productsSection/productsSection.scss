@@ -1,0 +1,38 @@
+.products-section {
+  flex-basis: 75%;
+  border: 1px solid $color-dark-beige;
+  border-radius: 10px;
+  overflow: hidden;
+  height: max-content;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $color-dark-beige;
+    padding: 25px 15px;
+    background-color: $color-brown;
+  }
+
+    &__title {
+      margin: 0;
+    }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    row-gap: 20px;
+    padding: 15px;
+    background-color: rgb($color-brown, 0.3);
+  }
+}
+
+.grid-size {
+  cursor: pointer;
+}
+
+.active {
+  color: $color-orange;
+}

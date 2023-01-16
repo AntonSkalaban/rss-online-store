@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2%;
+  background-color: $color-brown;
+  border-bottom: 1px solid $color-dark-beige;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &-img {
+      width: 60px;
+      height: 60px;
+    }
+
+    &-title {
+      color: $color-dark-beige;
+      text-shadow: 0 0 3px $color-white;
+    }
+  }
+
+  &__price {
+    color: $color-beige;
+
+    &-total {
+      color: $color-yellow;
+    }
+  }
+
+  &__cart {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+      &-amount {
+        position: absolute;
+        width: 37px;
+        height: 37px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-brown;
+        border: 1px solid $color-dark-beige;
+        color: $color-beige;
+        border-radius: 50%;
+        font-size: 27px;
+      }
+
+      &-img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
